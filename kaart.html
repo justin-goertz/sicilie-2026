@@ -170,27 +170,30 @@ const HOME = {
 };
 
 const BOAT_STOPS = [
-  { n:1, name:'Vertrek boothuur',            lat:37.0553, lng:15.2674, d:'Start · ~09:30, water & spullen mee' },
-  { n:2, name:'Rondje Ortygia vanaf zee',    lat:37.0505, lng:15.2935, d:'Langs Castello Maniace & de oost-zeewand' },
-  { n:3, name:'Plemmirio · Punta della Mola',lat:37.0175, lng:15.3290, d:'Snorkelspot, kristalhelder' },
-  { n:4, name:'Grotta Bagno della Regina',   lat:37.0115, lng:15.3310, d:'Zeegrot — met het bootje invaren' },
-  { n:5, name:'Ognina · lunch',              lat:36.9865, lng:15.3025, d:'Vissersdorpje: ankeren, zwemmen & lunch' },
-  { n:6, name:'Fontane Bianche',             lat:36.9555, lng:15.2665, d:'Turquoise water, verste punt' },
-  { n:7, name:'Cala Massolivieri',           lat:37.0230, lng:15.3255, d:'Laatste duik op de terugweg' },
-  { n:8, name:'Terug boothuur',              lat:37.0553, lng:15.2674, d:'Vóór 17:00 — dan komt de wind' },
+  { n:1, name:'Vertrek boothuur',            lat:37.0553, lng:15.2674, d:'Start · ~09:30, water & spullen mee. ZTL-zone bij het plein — kom iets eerder voor parkeren.' },
+  { n:2, name:'Rondje Ortygia vanaf zee',    lat:37.0505, lng:15.2935, d:'Vaar rond het hele eiland langs het water: Castello Maniace, de oude zeewand en de kades vanaf de mooiste kant. Rustig begin, camera klaar.' },
+  { n:3, name:'Zeegrotten van Ortygia',      lat:37.0802, lng:15.3014, d:'Korte lus pal boven het eiland. Grotten uitgesleten in de kliffen — eentje hartvormig, met kleur op de wanden. De skipper vaart er zo in. Enige stukje noord, daarna terug en zuid.' },
+  { n:4, name:'Baia della Pillirina',        lat:37.0219, lng:15.3174, d:'Eerste zwemstop & mooiste plek van de dag: natuurlijke inham met twee mini-strandjes in het Plemmirio-reservaat, glashelder water, karetschildpadden. Grot met stalactieten ernaast. Alleen per boot goed te bereiken.' },
+  { n:5, name:'Faro Capo Murro di Porco',    lat:37.0032, lng:15.3350, d:'Uiterste punt van het schiereiland: verlaten vuurtoren op hoge kliffen. Hier rond je de kaap. Sterke stroming trekt tonijn, zwaardvis en soms dolfijnen aan — houd het water in de gaten.' },
+  { n:6, name:'Zuidkust Plemmirio',          lat:37.0010, lng:15.3180, d:'Zuidflank van het reservaat: ruige kust, rustigste en helderste water van de hele dag. Hier de langste snorkel- en zwemstops — veel minder volk dan bij Pillirina.' },
+  { n:7, name:'Ognina (optioneel)',          lat:36.9809, lng:15.2598, d:'Optioneel verder zuid: klein natuurlijk haventje, fijne tussenstop op weg naar beneden.' },
+  { n:8, name:'Fontane Bianche (optioneel)', lat:36.9635, lng:15.2083, d:'Optioneel eindpunt: lang wit zandstrand met ondiep helder water, ~15 km zuid. Mooi maar het eet vaartijd — alleen bij een hele dag.' },
 ];
-const BOAT_ROUTE = [
-  [37.0553,15.2674],[37.0520,15.2760],[37.0490,15.2870],[37.0470,15.2955],[37.0500,15.2935],
-  [37.0545,15.2985],[37.0595,15.3000],[37.0635,15.2990],[37.0655,15.2955],[37.0620,15.2955],
-  [37.0560,15.2950],[37.0510,15.2930],[37.0470,15.2965],[37.0440,15.3060],[37.0410,15.3150],
-  [37.0360,15.3220],[37.0300,15.3270],[37.0240,15.3300],[37.0175,15.3315],[37.0135,15.3325],
-  [37.0110,15.3330],[37.0070,15.3375],[37.0040,15.3400],[37.0005,15.3380],[36.9960,15.3300],
-  [36.9910,15.3170],[36.9875,15.3060],[36.9865,15.3020],[36.9800,15.2910],[36.9720,15.2800],
-  [36.9640,15.2710],[36.9555,15.2660],[36.9660,15.2740],[36.9790,15.2910],[36.9880,15.3060],
-  [36.9970,15.3220],[37.0030,15.3340],[37.0055,15.3395],[37.0100,15.3350],[37.0150,15.3310],
-  [37.0230,15.3270],[37.0310,15.3220],[37.0380,15.3140],[37.0430,15.3040],[37.0455,15.2985],
-  [37.0490,15.2880],[37.0520,15.2760],[37.0553,15.2674]
+/* Kernroute (water-only): boothuur → rondje Ortygia → zeegrotten → terug → Pillirina → Capo Murro → zuidkust Plemmirio. Heen-en-terug via reverse. */
+const BOAT_CORE = [
+  [37.0553,15.2674],[37.0505,15.2790],[37.0468,15.2895],[37.0470,15.2985],[37.0505,15.3035],
+  [37.0560,15.3050],[37.0615,15.3050],[37.0670,15.3040],[37.0725,15.3028],[37.0802,15.3014],
+  [37.0740,15.3075],[37.0640,15.3140],[37.0530,15.3200],[37.0420,15.3250],[37.0320,15.3268],
+  [37.0250,15.3235],[37.0219,15.3174],[37.0170,15.3255],[37.0110,15.3320],[37.0060,15.3350],
+  [37.0032,15.3350],[36.9998,15.3330],[36.9980,15.3268],[36.9985,15.3208],[37.0010,15.3180]
 ];
+const BOAT_ROUTE = BOAT_CORE.concat([...BOAT_CORE].slice(0,-1).reverse());
+/* Optionele zuid-tak: zuidkust Plemmirio → Ognina → Fontane Bianche. Ook heen-en-terug. */
+const BOAT_OPT = [
+  [37.0010,15.3180],[36.9955,15.3060],[36.9905,15.2900],[36.9855,15.2720],[36.9818,15.2620],
+  [36.9809,15.2598],[36.9765,15.2430],[36.9705,15.2240],[36.9660,15.2120],[36.9635,15.2083]
+];
+const BOAT_OPT_ROUTE = BOAT_OPT.concat([...BOAT_OPT].slice(0,-1).reverse());
 
 const TRIPS = [
   { id:'plemmirio', name:'Plemmirio kust', cat:'strand', lat:37.0128, lng:15.3086, drive:'20 min auto', time:'Halve dag',
@@ -300,6 +303,8 @@ const markerIndex = {};
 /* Boat route line (glow + main) */
 L.polyline(BOAT_ROUTE, { color:'#0a3a5c', weight:9, opacity:.55, lineJoin:'round' }).addTo(layers.boot);
 L.polyline(BOAT_ROUTE, { color:'#38bdf8', weight:3.5, opacity:.95, dashArray:'2 9', lineJoin:'round' }).addTo(layers.boot);
+/* Optionele zuid-tak (Ognina · Fontane Bianche) — fijner & lichter */
+L.polyline(BOAT_OPT_ROUTE, { color:'#38bdf8', weight:2.5, opacity:.45, dashArray:'1 11', lineJoin:'round' }).addTo(layers.boot);
 
 /* Icons */
 function pinIcon(color, label, big){
@@ -342,7 +347,6 @@ markerIndex['home'] = homeMarker;
 
 /* Boat stop markers */
 BOAT_STOPS.forEach(s=>{
-  if(s.n===8) return; // same spot as start
   const m = L.marker([s.lat,s.lng], { icon:pinIcon(CATS.boot.color, s.n) })
     .bindPopup(`<div class="pop"><div class="pb"><div class="pt">${s.n}. ${s.name}</div>
       <div class="pm">⛵ Bootdag 7 juli</div><div class="pd">${s.d||''}</div></div></div>`, { maxWidth:250 });
@@ -393,7 +397,7 @@ function fitToFilter(key){
   if(key==='all'){ map.setView([36.98,15.15],10); return; }
   let pts=[];
   if(key==='home') pts=[[HOME.lat,HOME.lng]];
-  else if(key==='boot') pts=BOAT_ROUTE.slice();
+  else if(key==='boot') pts=BOAT_STOPS.map(s=>[s.lat,s.lng]);
   else pts=TRIPS.filter(t=>t.cat===key).map(t=>[t.lat,t.lng]);
   if(pts.length===1) map.setView(pts[0],12);
   else if(pts.length>1) map.fitBounds(pts,{padding:[60,60],maxZoom:12});
@@ -408,7 +412,7 @@ function listData(){
   if(active==='all'||active==='home')
     rows.push({ key:'home', cat:'home', name:HOME.name, meta:HOME.sub, desc:HOME.desc, img:HOME.img });
   if(active==='all'||active==='boot')
-    BOAT_STOPS.filter(s=>s.n!==8).forEach(s=> rows.push({ key:'boot-'+s.n, cat:'boot', name:s.n+'. '+s.name, meta:'⛵ Bootdag', desc:s.d||'', img:null }));
+    BOAT_STOPS.forEach(s=> rows.push({ key:'boot-'+s.n, cat:'boot', name:s.n+'. '+s.name, meta:'⛵ Bootdag', desc:s.d||'', img:null }));
   TRIPS.forEach(t=>{ if(active==='all'||active===t.cat) rows.push({ key:t.id, cat:t.cat, name:t.name, meta:'🚗 '+t.drive+' · ⏱ '+t.time, desc:t.desc, img:t.img }); });
   return rows;
 }
@@ -447,7 +451,7 @@ function renderCards(){
 const panel = document.getElementById('panel');
 document.getElementById('listBtn').onclick = ()=> panel.classList.toggle('open');
 
-const allBounds = L.latLngBounds([[HOME.lat,HOME.lng], ...BOAT_ROUTE, ...TRIPS.map(t=>[t.lat,t.lng])]);
+const allBounds = L.latLngBounds([[HOME.lat,HOME.lng], ...BOAT_STOPS.map(s=>[s.lat,s.lng]), ...TRIPS.map(t=>[t.lat,t.lng])]);
 document.getElementById('fitBtn').onclick = ()=> map.flyToBounds(allBounds, { padding:[60,60], duration:1.1 });
 document.getElementById('homeBtn').onclick = ()=>{ map.flyTo([HOME.lat,HOME.lng],15,{duration:1.1}); setTimeout(()=>homeMarker.openPopup(),700); };
 
