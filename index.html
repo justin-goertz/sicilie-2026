@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sicilië 2026 — Justin, Mama & Broertje</title>
+<title>Sicilië 2026 — Justin, Manja & Menno</title>
 <meta property="og:title" content="Sicilië trip juli 2026 🇮🇹" />
-<meta property="og:description" content="Bootdag Syracuse + dagtrips vanuit Ortygia" />
+<meta property="og:description" content="Ortygia • Bootdag • Dagtrips" />
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
@@ -14,238 +14,352 @@
     color: #e8ecf3;
     min-height: 100vh;
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
+  a { color: inherit; text-decoration: none; }
+
+  /* HERO */
   .hero {
     position: relative;
-    min-height: 100vh;
+    min-height: 92vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
     background:
-      linear-gradient(180deg, rgba(10,14,26,0.4) 0%, rgba(10,14,26,0.85) 70%, #0a0e1a 100%),
+      linear-gradient(180deg, rgba(10,14,26,0.3) 0%, rgba(10,14,26,0.85) 70%, #0a0e1a 100%),
       url('https://images.unsplash.com/photo-1596395819067-6300f6152f04?w=2000&auto=format&fit=crop') center/cover;
   }
-  .hero-emoji {
-    font-size: 60px;
-    margin-bottom: 12px;
-    animation: bob 3s ease-in-out infinite;
-  }
-  @keyframes bob {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
+  .hero-emoji { font-size: 60px; margin-bottom: 12px; animation: bob 3s ease-in-out infinite; }
+  @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
   h1 {
     font-size: clamp(36px, 7vw, 68px);
-    font-weight: 800;
-    letter-spacing: -1.5px;
-    text-align: center;
+    font-weight: 800; letter-spacing: -1.5px; text-align: center;
     background: linear-gradient(135deg, #fff 0%, #7ee7ff 60%, #4a7fff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     margin-bottom: 12px;
   }
-  .subtitle {
-    font-size: clamp(15px, 2vw, 20px);
-    color: #b8c4e0;
-    text-align: center;
-    max-width: 600px;
-    line-height: 1.5;
-    margin-bottom: 8px;
-  }
+  .subtitle { font-size: clamp(15px, 2vw, 20px); color: #b8c4e0; text-align: center; max-width: 640px; line-height: 1.5; }
   .date-badge {
-    display: inline-block;
-    padding: 8px 20px;
-    background: rgba(74,127,255,0.15);
-    border: 1px solid rgba(74,127,255,0.4);
-    border-radius: 30px;
-    color: #7ee7ff;
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 24px;
-    backdrop-filter: blur(10px);
+    display: inline-block; padding: 8px 20px;
+    background: rgba(74,127,255,0.15); border: 1px solid rgba(74,127,255,0.4);
+    border-radius: 30px; color: #7ee7ff; font-size: 14px; font-weight: 600;
+    margin-top: 24px; backdrop-filter: blur(10px);
   }
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
-    max-width: 1000px;
-    width: 100%;
-    padding: 60px 20px;
-    margin: 0 auto;
+  .scroll-hint { margin-top: 40px; color: #7ee7ff; font-size: 13px; opacity: 0.7; animation: bob 2s ease-in-out infinite; }
+
+  /* SECTIONS */
+  section.block { max-width: 1100px; margin: 0 auto; padding: 80px 20px 40px; }
+  .section-head { text-align: center; margin-bottom: 40px; }
+  .section-eyebrow { color: #7ee7ff; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+  .section-head h2 {
+    font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -0.8px;
+    background: linear-gradient(135deg, #fff, #7ee7ff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
+  .section-lead { max-width: 640px; margin: 12px auto 0; color: #a8b3cf; font-size: 16px; line-height: 1.6; }
+
+  /* HIGHLIGHTS */
+  .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; max-width: 1000px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 5; }
+  .highlight { background: rgba(19,26,43,0.85); backdrop-filter: blur(10px); padding: 20px; border-radius: 14px; border: 1px solid #1e2740; text-align: center; }
+  .highlight .num { font-size: 30px; font-weight: 800; background: linear-gradient(135deg, #7ee7ff, #4a7fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .highlight .lbl { font-size: 11px; color: #8a95b2; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ACCOMMODATION */
+  .stay {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; align-items: center;
+    background: linear-gradient(135deg, #131a2b 0%, #0f1420 100%);
+    border-radius: 24px; border: 1px solid #1e2740; overflow: hidden;
+  }
+  .stay-img { width: 100%; height: 100%; min-height: 320px; object-fit: cover; }
+  .stay-body { padding: 36px; }
+  .stay-tag { display: inline-block; background: rgba(126,231,255,0.12); color: #7ee7ff; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .stay-body h3 { font-size: 28px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .stay-body p.stay-desc { color: #a8b3cf; line-height: 1.7; font-size: 15px; margin-bottom: 20px; }
+  .stay-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+  .stay-fact { background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 10px; font-size: 13px; color: #d0d8ea; display:flex; align-items:center; gap:8px; }
+  .rating { display: flex; align-items: center; gap: 10px; color: #ffd166; font-weight: 600; }
+  .rating small { color: #8a95b2; font-weight: 400; }
+
+  /* STORY */
+  .story-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .story-text p { color: #c8d0e6; line-height: 1.8; font-size: 15px; margin-bottom: 14px; }
+  .story-text p.intro { font-size: 18px; color: #e8ecf3; }
+  .story-img { width: 100%; height: 380px; object-fit: cover; border-radius: 20px; }
+
+  /* ORTYGIA TODO LIST */
+  .todo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 20px; }
+  .todo-item {
+    background: linear-gradient(180deg, #131a2b, #0f1420);
+    border: 1px solid #1e2740; border-radius: 16px; padding: 22px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .todo-item:hover { transform: translateY(-3px); border-color: #4a7fff; }
+  .todo-emoji { font-size: 28px; margin-bottom: 10px; }
+  .todo-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .todo-item p { font-size: 13px; color: #a8b3cf; line-height: 1.5; }
+
+  /* CARDS (subpages) */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
   .card {
     background: linear-gradient(180deg, #131a2b 0%, #0f1420 100%);
-    border-radius: 20px;
-    overflow: hidden;
-    cursor: pointer;
-    border: 1px solid #1e2740;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    position: relative;
+    border-radius: 20px; overflow: hidden; cursor: pointer;
+    border: 1px solid #1e2740; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: block; position: relative;
   }
-  .card:hover {
-    transform: translateY(-6px);
-    border-color: #4a7fff;
-    box-shadow: 0 20px 60px rgba(74,127,255,0.25);
-  }
-  .card-img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    background: #1e2740;
-    display: block;
-  }
-  .card-badge {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    padding: 6px 14px;
-    background: rgba(0,0,0,0.6);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+  .card:hover { transform: translateY(-6px); border-color: #4a7fff; box-shadow: 0 20px 60px rgba(74,127,255,0.25); }
+  .card-img { width: 100%; height: 220px; object-fit: cover; background: #1e2740; display: block; }
+  .card-badge { position: absolute; top: 16px; left: 16px; padding: 6px 14px; background: rgba(0,0,0,0.6); color: #fff; font-size: 12px; font-weight: 600; border-radius: 20px; backdrop-filter: blur(10px); text-transform: uppercase; letter-spacing: 0.5px; }
   .card-body { padding: 24px; }
-  .card-title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    letter-spacing: -0.3px;
+  .card-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.3px; }
+  .card-desc { font-size: 14px; color: #a8b3cf; line-height: 1.6; margin-bottom: 16px; }
+  .card-meta { display: flex; gap: 16px; padding-top: 16px; border-top: 1px solid #1e2740; font-size: 12px; color: #7ee7ff; font-weight: 500; flex-wrap: wrap; }
+  .card-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; color: #4a7fff; font-weight: 600; font-size: 14px; }
+
+  /* MUST DO / TIPS */
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .tip {
+    background: linear-gradient(180deg, #131a2b, #0f1420);
+    border-radius: 16px; padding: 22px; border: 1px solid #1e2740;
+    display: flex; gap: 14px; align-items: flex-start;
   }
-  .card-desc {
-    font-size: 14px;
-    color: #a8b3cf;
-    line-height: 1.6;
-    margin-bottom: 16px;
-  }
-  .card-meta {
-    display: flex;
-    gap: 16px;
-    padding-top: 16px;
-    border-top: 1px solid #1e2740;
-    font-size: 12px;
-    color: #7ee7ff;
-    font-weight: 500;
-  }
-  .card-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 12px;
-    color: #4a7fff;
-    font-weight: 600;
-    font-size: 14px;
-  }
-  .footer {
-    text-align: center;
-    padding: 40px 20px;
-    color: #6a7590;
-    font-size: 13px;
-    border-top: 1px solid #1e2740;
-  }
-  .footer a { color: #7ee7ff; text-decoration: none; }
-  .highlights {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
-  }
-  .highlight {
-    background: #131a2b;
-    padding: 20px;
-    border-radius: 14px;
-    border: 1px solid #1e2740;
-    text-align: center;
-  }
-  .highlight .num {
-    font-size: 32px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #7ee7ff, #4a7fff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .highlight .lbl {
-    font-size: 12px;
-    color: #8a95b2;
-    margin-top: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  .tip-icon { font-size: 26px; flex-shrink: 0; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: rgba(74,127,255,0.12); border-radius: 12px; }
+  .tip h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .tip p { font-size: 13px; color: #a8b3cf; line-height: 1.55; }
+
+  .footer { text-align: center; padding: 60px 20px 40px; color: #6a7590; font-size: 13px; border-top: 1px solid #1e2740; margin-top: 40px; }
+  .footer a { color: #7ee7ff; }
+
+  @media (max-width: 768px) {
+    .stay { grid-template-columns: 1fr; }
+    .stay-body { padding: 24px; }
+    .story-wrap { grid-template-columns: 1fr; }
+    .story-img { height: 260px; }
+    section.block { padding: 60px 20px 20px; }
   }
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-emoji">🇮🇹⛵🌊</div>
   <h1>Sicilië 2026</h1>
-  <p class="subtitle">Ortygia als basis — bootdag op de Ionische Zee & de mooiste dagtrips langs de kust</p>
+  <p class="subtitle">Ortygia als basis — bootdag op de Ionische Zee, barokke stadjes, verborgen vissersdorpjes en het mooiste zwemwater van Italië</p>
   <div class="date-badge">📅 Juli 2026 • Justin, Manja & Menno</div>
+  <div class="scroll-hint">↓ Scroll down</div>
 </section>
 
+<!-- QUICK STATS -->
 <div class="highlights">
+  <div class="highlight"><div class="num">🏠</div><div class="lbl">Ortygia apt</div></div>
   <div class="highlight"><div class="num">1</div><div class="lbl">Bootdag</div></div>
-  <div class="highlight"><div class="num">14</div><div class="lbl">Dagtrip spots</div></div>
+  <div class="highlight"><div class="num">14</div><div class="lbl">Dagtrips</div></div>
   <div class="highlight"><div class="num">≤1u</div><div class="lbl">Rijden max</div></div>
   <div class="highlight"><div class="num">🏖</div><div class="lbl">Zee & zon</div></div>
 </div>
 
-<div class="cards">
+<!-- ACCOMMODATION -->
+<section class="block" id="stay">
+  <div class="section-head">
+    <div class="section-eyebrow">Onze basis</div>
+    <h2>Ortigia Sea View Apartment</h2>
+    <p class="section-lead">Een gerenoveerd appartement van 220m² in een 19e-eeuws pand pal aan het plein met uitzicht op de haven van Ortygia. 3 slaapkamers, 3 badkamers, hoge plafonds en Franse ramen — een van de best beoordeelde huizen op heel Airbnb.</p>
+  </div>
 
-  <a class="card" href="./boot.html">
-    <div style="position:relative">
-      <div class="card-badge">⛵ 7 juli</div>
-      <img class="card-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop" />
-    </div>
-    <div class="card-body">
-      <div class="card-title">De Bootdag</div>
-      <div class="card-desc">
-        40pk bootje van Porto Grande naar Plemmirio, Ognina en Fontane Bianche.
-        Snorkelen, lunch aan wal, zwemmen in kristalhelder water.
+  <div class="stay">
+    <img class="stay-img" src="https://a0.muscache.com/im/pictures/miso/Hosting-12345/original/placeholder.jpg" onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop'" alt="Ortigia apartment" />
+    <div class="stay-body">
+      <div class="stay-tag">⭐ Guest Favourite</div>
+      <h3>3 slaapkamers • 8 gasten • Zeezicht</h3>
+      <p class="stay-desc">Op de eerste verdieping van een historisch gebouw aan Ortygia's plein, met zicht op de marina en de Grand Harbour. Recent gerenoveerd met een mix van antiek en modern, hoge plafonds en een 19e-eeuws fresco op één van de slaapkamerplafonds.</p>
+      <div class="stay-facts">
+        <div class="stay-fact">🛏 3 slaapkamers</div>
+        <div class="stay-fact">🚿 3 badkamers</div>
+        <div class="stay-fact">📐 220m²</div>
+        <div class="stay-fact">❄ A/C in elke kamer</div>
+        <div class="stay-fact">📶 Wi-Fi + Nespresso</div>
+        <div class="stay-fact">🅿️ Parking op plein</div>
       </div>
-      <div class="card-meta">
-        <span>~2,5u varen</span>
-        <span>~35 km</span>
-        <span>8 stops</span>
+      <div class="rating">
+        ⭐ 4.99 <small>· 180 reviews · Superhost Anna Enrica</small>
       </div>
-      <div class="card-cta">Bekijk de route →</div>
     </div>
-  </a>
+  </div>
+</section>
 
-  <a class="card" href="./trips.html">
-    <div style="position:relative">
-      <div class="card-badge">🚗 Auto trips</div>
-      <img class="card-img" src="https://images.unsplash.com/photo-1602928321679-560bb453f190?w=800&auto=format&fit=crop" />
-    </div>
-    <div class="card-body">
-      <div class="card-title">Dagtrips vanuit Ortygia</div>
-      <div class="card-desc">
-        Barokke stadjes, verborgen vissersdorpjes, wilde stranden en natuurreservaten.
-        Alles binnen 1 uur rijden. Filter op wat je zin in hebt.
-      </div>
-      <div class="card-meta">
-        <span>14 spots</span>
-        <span>Filter per type</span>
-        <span>Foto's + tips</span>
-      </div>
-      <div class="card-cta">Ontdek de trips →</div>
-    </div>
-  </a>
+<!-- ORTYGIA STORY -->
+<section class="block" id="ortygia">
+  <div class="section-head">
+    <div class="section-eyebrow">Waar we zitten</div>
+    <h2>Wat maakt Ortygia zo bijzonder?</h2>
+  </div>
 
-</div>
+  <div class="story-wrap">
+    <img class="story-img" src="https://images.unsplash.com/photo-1583229502683-cf7f2f2a5d2f?w=1200&auto=format&fit=crop" onerror="this.src='https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1200&auto=format&fit=crop'" alt="Ortygia" />
+    <div class="story-text">
+      <p class="intro">Ortygia is het historische hart van Syracuse — een klein eiland, verbonden met vasteland Sicilië via twee bruggetjes. Nog geen 1 km² groot, maar 2.700 jaar geschiedenis.</p>
+      <p>De oude Grieken stichtten hier in 734 v.Chr. hun kolonie, en je loopt er letterlijk overheen: Griekse tempelzuilen zitten verwerkt in de muren van de <b>Duomo</b>, en op elke hoek vind je een barok pleintje, een vissersbootje of een oude palazzo met wasgoed voor de ramen.</p>
+      <p>Overdag drink je espresso op <b>Piazza Duomo</b>, 's middags spring je van de rotsen bij <b>Forte Vigliena</b> zo de zee in, en 's avonds slenter je door smalle steegjes op zoek naar cannoli en een glas Nero d'Avola.</p>
+      <p>Geen auto's nodig, alles op loopafstand, altijd zeewind. Dít is waarom mensen verliefd worden op Sicilië.</p>
+    </div>
+  </div>
+
+  <!-- Things to do IN Ortygia -->
+  <div style="margin-top:50px">
+    <div class="section-eyebrow" style="text-align:center;margin-bottom:20px">Op het eiland zelf</div>
+    <div class="todo-grid">
+      <div class="todo-item">
+        <div class="todo-emoji">⛪</div>
+        <h4>Duomo di Siracusa</h4>
+        <p>Barokke kathedraal gebouwd óp een Griekse tempel uit de 5e eeuw v.Chr. Zuilen zichtbaar in de muren.</p>
+      </div>
+      <div class="todo-item">
+        <div class="todo-emoji">💧</div>
+        <h4>Fonte Aretusa</h4>
+        <p>Zoetwaterbron mét papyrusplanten (uniek in Europa!) direct aan de zee. Mythisch verhaal van een nimf.</p>
+      </div>
+      <div class="todo-item">
+        <div class="todo-emoji">🏰</div>
+        <h4>Castello Maniace</h4>
+        <p>13e-eeuws kasteel op de punt van het eiland. Ga voor zonsondergang — spectaculair uitzicht.</p>
+      </div>
+      <div class="todo-item">
+        <div class="todo-emoji">🐟</div>
+        <h4>Mercato di Ortigia</h4>
+        <p>Ochtendmarkt met vis, olijven, kaas, tomaten. Ga bij <b>Fratelli Burgio</b> voor een legendarische antipasti-plank.</p>
+      </div>
+      <div class="todo-item">
+        <div class="todo-emoji">🌊</div>
+        <h4>Zwemmen bij Forte Vigliena</h4>
+        <p>Rotsplateau aan de oostkust van Ortygia. Ladders in het water, kristalhelder, gratis. Fav van locals.</p>
+      </div>
+      <div class="todo-item">
+        <div class="todo-emoji">🍷</div>
+        <h4>Aperitivo op Piazza Duomo</h4>
+        <p>Het mooiste plein van heel Zuid-Italië. Spritz bij zonsondergang op de trappen van de kathedraal.</p>
+      </div>
+      <div class="todo-item">
+        <div class="todo-emoji">🎭</div>
+        <h4>Teatro Greco (Neapolis)</h4>
+        <p>Grieks amfitheater uit 5e eeuw v.Chr. — 15 min lopen van Ortygia. In juli soms live opvoeringen.</p>
+      </div>
+      <div class="todo-item">
+        <div class="todo-emoji">🍨</div>
+        <h4>Gelato + Granita</h4>
+        <p>Ontbijt van locals: <b>granita di mandorla</b> (amandel) met een warme brioche. Bij <b>Gelati Bianca</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CARDS: BOOT + TRIPS -->
+<section class="block" id="plans">
+  <div class="section-head">
+    <div class="section-eyebrow">Wat gaan we doen</div>
+    <h2>Onze plannen</h2>
+    <p class="section-lead">Twee grote hoofdstukken: één dag op het water (7 juli), en de rest van de tijd exploring vanuit Ortygia met de auto.</p>
+  </div>
+
+  <div class="cards">
+
+    <a class="card" href="./boot.html">
+      <div style="position:relative">
+        <div class="card-badge">⛵ 7 juli</div>
+        <img class="card-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop" />
+      </div>
+      <div class="card-body">
+        <div class="card-title">De Bootdag 🌊</div>
+        <div class="card-desc">
+          40pk bootje van Porto Grande langs Plemmirio, Grotta del Bue Marino, Ognina en Fontane Bianche.
+          Snorkelen bij Capo Murro di Porco, lunch aan wal, chillen in kristalhelder water.
+        </div>
+        <div class="card-meta">
+          <span>~2,5u varen</span>
+          <span>~35 km</span>
+          <span>8 stops</span>
+          <span>Snorkelspots</span>
+        </div>
+        <div class="card-cta">Bekijk de route op de kaart →</div>
+      </div>
+    </a>
+
+    <a class="card" href="./trips.html">
+      <div style="position:relative">
+        <div class="card-badge">🚗 Auto trips</div>
+        <img class="card-img" src="https://images.unsplash.com/photo-1602928321679-560bb453f190?w=800&auto=format&fit=crop" />
+      </div>
+      <div class="card-body">
+        <div class="card-title">Dagtrips vanuit Ortygia 🏛</div>
+        <div class="card-desc">
+          Barok Noto, vissersdorpje Marzamemi, Vendicari natuurreservaat, hidden gems zoals Ferla en Brucoli.
+          Alles binnen 1 uur rijden. Filter op wat je zin in hebt.
+        </div>
+        <div class="card-meta">
+          <span>14 spots</span>
+          <span>Filter per type</span>
+          <span>Foto's + tips</span>
+        </div>
+        <div class="card-cta">Ontdek de trips →</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- MUST DO / TIPS -->
+<section class="block" id="tips">
+  <div class="section-head">
+    <div class="section-eyebrow">Belangrijk om te weten</div>
+    <h2>Sicilië tips & must-do's</h2>
+    <p class="section-lead">Kleine dingen die het verschil maken tussen "leuke vakantie" en "beste vakantie ooit".</p>
+  </div>
+
+  <div class="tips-grid">
+    <div class="tip">
+      <div class="tip-icon">🍝</div>
+      <div><h4>Eet Siciliaans, geen pizza</h4><p>Pasta alla Norma, arancini, pesce spada (zwaardvis), caponata, cannoli. Pizza is voor Napels.</p></div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">☀️</div>
+      <div><h4>Doe het rustig aan tussen 13-17u</h4><p>In juli 35-40°. Middagen = siësta, strand of schaduw. Locals lunchen tot 15u, dan is alles dicht.</p></div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">🍷</div>
+      <div><h4>Drink locale wijnen</h4><p>Nero d'Avola (rood), Grillo (wit), en Etna-wijnen. Prijs/kwaliteit ongeëvenaard. Marsala als dessert.</p></div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">💶</div>
+      <div><h4>Cash blijft handig</h4><p>Veel kleine tenten, markten en visserdorpjes willen liever cash. Neem altijd €50-100 mee.</p></div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">🚗</div>
+      <div><h4>Rijden = avontuur</h4><p>Sicilianen zijn creatief in het verkeer. Rustig blijven, defensief rijden, en accepteer dat scooters overal langskomen.</p></div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">🥤</div>
+      <div><h4>Granita ≠ Slush Puppie</h4><p>Ontbijt van Sicilianen: <b>granita di mandorla</b> (amandel) of citroen, met een warme brioche erbij. Serieus proberen.</p></div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">🏊</div>
+      <div><h4>Beste zwemplekken zijn geen stranden</h4><p>De mooiste zwemplekken van Sicilië zijn rotsplateaus (Plemmirio, Vendicari, Isola delle Correnti). Neem waterschoenen.</p></div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">📸</div>
+      <div><h4>Golden hour is magic</h4><p>Vanaf 19:00 in juli. Ortygia glow, Noto goud, Marzamemi pastel. Plan diners na 20:00 op een plein.</p></div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">🌋</div>
+      <div><h4>Etna? Alleen als je écht wilt</h4><p>3+ uur rijden vanuit Ortygia. Mooi maar een hele dag kwijt. Alternatief: uitzicht vanaf Taormina op afstand.</p></div>
+    </div>
+  </div>
+</section>
 
 <div class="footer">
   Made with ❤️ voor Manja & Menno<br/>
-  <span style="opacity:0.6">Klik op een kaart om details te bekijken</span>
+  <span style="opacity:0.6">Klik op een kaart hierboven om details te bekijken</span><br/><br/>
+  <a href="#stay">🏠 Verblijf</a> · <a href="#ortygia">🏛 Ortygia</a> · <a href="./boot.html">⛵ Boot</a> · <a href="./trips.html">🚗 Trips</a> · <a href="#tips">💡 Tips</a>
 </div>
 
 </body>
