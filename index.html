@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sicilië 2026 — Justin, Mama & Broertje</title>
+<meta property="og:title" content="Sicilië trip juli 2026 🇮🇹" />
+<meta property="og:description" content="Bootdag Syracuse + dagtrips vanuit Ortygia" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0a0e1a;
+    color: #e8ecf3;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background:
+      linear-gradient(180deg, rgba(10,14,26,0.4) 0%, rgba(10,14,26,0.85) 70%, #0a0e1a 100%),
+      url('https://images.unsplash.com/photo-1596395819067-6300f6152f04?w=2000&auto=format&fit=crop') center/cover;
+  }
+  .hero-emoji {
+    font-size: 60px;
+    margin-bottom: 12px;
+    animation: bob 3s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  h1 {
+    font-size: clamp(36px, 7vw, 68px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    text-align: center;
+    background: linear-gradient(135deg, #fff 0%, #7ee7ff 60%, #4a7fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .subtitle {
+    font-size: clamp(15px, 2vw, 20px);
+    color: #b8c4e0;
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .date-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(74,127,255,0.15);
+    border: 1px solid rgba(74,127,255,0.4);
+    border-radius: 30px;
+    color: #7ee7ff;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 24px;
+    backdrop-filter: blur(10px);
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    max-width: 1000px;
+    width: 100%;
+    padding: 60px 20px;
+    margin: 0 auto;
+  }
+  .card {
+    background: linear-gradient(180deg, #131a2b 0%, #0f1420 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #1e2740;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: #4a7fff;
+    box-shadow: 0 20px 60px rgba(74,127,255,0.25);
+  }
+  .card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    background: #1e2740;
+    display: block;
+  }
+  .card-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .card-body { padding: 24px; }
+  .card-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+  .card-desc {
+    font-size: 14px;
+    color: #a8b3cf;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .card-meta {
+    display: flex;
+    gap: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #1e2740;
+    font-size: 12px;
+    color: #7ee7ff;
+    font-weight: 500;
+  }
+  .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    color: #4a7fff;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6a7590;
+    font-size: 13px;
+    border-top: 1px solid #1e2740;
+  }
+  .footer a { color: #7ee7ff; text-decoration: none; }
+  .highlights {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .highlight {
+    background: #131a2b;
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid #1e2740;
+    text-align: center;
+  }
+  .highlight .num {
+    font-size: 32px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #7ee7ff, #4a7fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .highlight .lbl {
+    font-size: 12px;
+    color: #8a95b2;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-emoji">🇮🇹⛵🌊</div>
+  <h1>Sicilië 2026</h1>
+  <p class="subtitle">Ortygia als basis — bootdag op de Ionische Zee & de mooiste dagtrips langs de kust</p>
+  <div class="date-badge">📅 Juli 2026 • Justin, Mama & Broertje</div>
+</section>
+
+<div class="highlights">
+  <div class="highlight"><div class="num">1</div><div class="lbl">Bootdag</div></div>
+  <div class="highlight"><div class="num">14</div><div class="lbl">Dagtrip spots</div></div>
+  <div class="highlight"><div class="num">≤1u</div><div class="lbl">Rijden max</div></div>
+  <div class="highlight"><div class="num">🏖</div><div class="lbl">Zee & zon</div></div>
+</div>
+
+<div class="cards">
+
+  <a class="card" href="./boot.html">
+    <div style="position:relative">
+      <div class="card-badge">⛵ 7 juli</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop" />
+    </div>
+    <div class="card-body">
+      <div class="card-title">De Bootdag</div>
+      <div class="card-desc">
+        40pk bootje van Porto Grande naar Plemmirio, Ognina en Fontane Bianche.
+        Snorkelen, lunch aan wal, zwemmen in kristalhelder water.
+      </div>
+      <div class="card-meta">
+        <span>~2,5u varen</span>
+        <span>~35 km</span>
+        <span>8 stops</span>
+      </div>
+      <div class="card-cta">Bekijk de route →</div>
+    </div>
+  </a>
+
+  <a class="card" href="./trips.html">
+    <div style="position:relative">
+      <div class="card-badge">🚗 Auto trips</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1602928321679-560bb453f190?w=800&auto=format&fit=crop" />
+    </div>
+    <div class="card-body">
+      <div class="card-title">Dagtrips vanuit Ortygia</div>
+      <div class="card-desc">
+        Barokke stadjes, verborgen vissersdorpjes, wilde stranden en natuurreservaten.
+        Alles binnen 1 uur rijden. Filter op wat je zin in hebt.
+      </div>
+      <div class="card-meta">
+        <span>14 spots</span>
+        <span>Filter per type</span>
+        <span>Foto's + tips</span>
+      </div>
+      <div class="card-cta">Ontdek de trips →</div>
+    </div>
+  </a>
+
+</div>
+
+<div class="footer">
+  Made with ❤️ voor Mama & Broertje<br/>
+  <span style="opacity:0.6">Klik op een kaart om details te bekijken</span>
+</div>
+
+</body>
+</html>

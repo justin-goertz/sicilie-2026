@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<title>Bootroute Syracuse — 7 juli</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin:0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    display:flex; height:100vh; overflow:hidden;
+    background:#0d1117; color:#e6edf3;
+  }
+  #map { flex: 1; height: 100%; }
+  #side {
+    width: 400px; flex-shrink: 0;
+    height:100%; overflow-y: auto;
+    background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+    border-left: 1px solid #30363d;
+    padding: 24px;
+  }
+  #side::-webkit-scrollbar { width: 6px; }
+  #side::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+
+  .header {
+    padding-bottom: 16px; margin-bottom: 20px;
+    border-bottom: 1px solid #30363d;
+  }
+  h1 {
+    font-size: 22px; margin: 0 0 6px; font-weight: 700;
+    background: linear-gradient(90deg, #58a6ff, #7ee787);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .subtitle { font-size: 13px; color: #8b949e; }
+  .stats {
+    display: flex; gap: 12px; margin-top: 14px;
+  }
+  .stat {
+    flex:1; background:#21262d; padding:10px 12px; border-radius:8px;
+    border: 1px solid #30363d;
+  }
+  .stat .label { font-size: 10px; color:#8b949e; text-transform: uppercase; letter-spacing:0.5px; }
+  .stat .value { font-size: 16px; font-weight:600; color:#e6edf3; margin-top:2px; }
+
+  h2 {
+    font-size: 11px; text-transform: uppercase; color:#8b949e;
+    margin: 24px 0 12px; letter-spacing: 1px; font-weight: 600;
+  }
+
+  .stop {
+    background:#161b22; border-radius:10px; padding:14px 16px; margin-bottom:10px;
+    border: 1px solid #30363d;
+    position: relative; transition: all 0.2s;
+    cursor: pointer;
+  }
+  .stop:hover { border-color:#58a6ff; transform: translateX(-2px); }
+  .stop .top { display:flex; align-items:center; gap:10px; }
+  .stop .num {
+    width:26px; height:26px; border-radius:50%;
+    background:#1f6feb; color:#fff; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; flex-shrink:0;
+  }
+  .stop .name { font-weight: 600; font-size:14px; }
+  .stop .desc { font-size: 13px; color:#c9d1d9; margin-top:8px; line-height:1.5; }
+  .stop .meta {
+    display:flex; gap:12px; flex-wrap:wrap;
+    font-size: 12px; color:#8b949e; margin-top:10px;
+  }
+  .stop .meta span { display:inline-flex; align-items:center; gap:4px; }
+  .badge {
+    display:inline-block; padding:2px 8px; border-radius:10px;
+    font-size:10px; font-weight:600; margin-left:auto;
+  }
+  .badge.top { background: rgba(126,231,135,0.15); color:#7ee787; }
+  .badge.opt { background: rgba(210,153,34,0.15); color:#d29922; }
+
+  .tips {
+    background:#161b22; border-radius:10px; padding:14px 16px;
+    border:1px solid #30363d; font-size:13px; line-height:1.6;
+  }
+  .tips li { margin-bottom:6px; color:#c9d1d9; }
+  .tips b { color:#e6edf3; }
+  a { color:#58a6ff; text-decoration:none; }
+
+  .controls {
+    position: absolute; top: 12px; left: 12px; z-index: 1000;
+    background: rgba(22,27,34,0.95); backdrop-filter: blur(8px);
+    border-radius: 8px; padding: 4px; display: flex; gap: 2px;
+    border: 1px solid #30363d;
+  }
+  .controls button {
+    background: transparent; border: none; color: #c9d1d9;
+    padding: 6px 12px; font-size: 12px; font-weight: 500;
+    cursor: pointer; border-radius: 5px;
+  }
+  .controls button.active { background: #1f6feb; color: #fff; }
+</style>
+</head>
+<body>
+<div id="map">
+  <div class="controls">
+    <button id="sat" class="active">Satelliet</button>
+    <button id="map-btn">Kaart</button>
+  </div>
+</div>
+<div id="side">
+  <div class="header">
+    <h1>🚤 Bootdag Syracuse</h1>
+    <div class="subtitle">7 juli · vertrek Porto Grande · Plemmirio kust</div>
+    <div class="stats">
+      <div class="stat"><div class="label">Vaartijd</div><div class="value">~2,5u</div></div>
+      <div class="stat"><div class="label">Afstand</div><div class="value">~35 km</div></div>
+      <div class="stat"><div class="label">Stops</div><div class="value">6</div></div>
+    </div>
+  </div>
+
+  <h2>Route</h2>
+
+  <div class="stop" data-stop="1">
+    <div class="top">
+      <div class="num">1</div>
+      <div class="name">Vertrek boothuur</div>
+    </div>
+    <div class="desc">Ophalen aan de zuidkant van Porto Grande. Vroeg vertrek voor kalme zee.</div>
+    <div class="meta"><span>🕘 09:30</span><span>📍 Porto Grande</span></div>
+  </div>
+
+  <div class="stop" data-stop="2">
+    <div class="top">
+      <div class="num">2</div>
+      <div class="name">Rondje Ortygia vanaf zee</div>
+    </div>
+    <div class="desc">Langs Castello Maniace en de kliffen van Ortygia. Zwaai naar je Airbnb-balkon. Spectaculair aanzicht dat je vanaf land nooit ziet.</div>
+    <div class="meta"><span>🕘 ~20 min</span><span>📸 fototijd</span></div>
+  </div>
+
+  <div class="stop" data-stop="3">
+    <div class="top">
+      <div class="num">3</div>
+      <div class="name">Plemmirio — Punta della Mola</div>
+      <span class="badge top">TOP</span>
+    </div>
+    <div class="desc">Beschermd zeenatuurreservaat. Dramatische kliffen, kristalhelder water, veel vis. Anker in een baaitje, snorkelen is hier écht bijzonder.</div>
+    <div class="meta"><span>🕙 10:45–12:00</span><span>🤿 snorkelen</span></div>
+  </div>
+
+  <div class="stop" data-stop="4">
+    <div class="top">
+      <div class="num">4</div>
+      <div class="name">Grotta del Bagno della Regina</div>
+    </div>
+    <div class="desc">Zeegrot langs de Plemmirio-kust. Alleen invaren als de zee vlak is, anders vanaf buiten kijken. Legende: hier zou koningin Marina hebben gebaad.</div>
+    <div class="meta"><span>🕛 12:15</span><span>⚠️ kalme zee vereist</span></div>
+  </div>
+
+  <div class="stop" data-stop="5">
+    <div class="top">
+      <div class="num">5</div>
+      <div class="name">Ognina — Lunch</div>
+      <span class="badge top">TOP</span>
+    </div>
+    <div class="desc">Klein vissersplaatsje met natuurlijk haventje en een piepklein eilandje. Fantastisch water, veel minder toeristen. Anker of leg aan bij de kade en eet vis bij een van de tavernes (Trattoria La Foce, Ristorante La Rosa).</div>
+    <div class="meta"><span>🕐 13:00–15:30</span><span>🍝 lunch aan wal</span></div>
+  </div>
+
+  <div class="stop" data-stop="6">
+    <div class="top">
+      <div class="num">6</div>
+      <div class="name">Fontane Bianche</div>
+    </div>
+    <div class="desc">Lange witte zandstrand, Caribisch turquoise water. Drukker en socialer — kom er langs varen, anker in ondiep water 100m van het strand voor een laatste zwemsessie.</div>
+    <div class="meta"><span>🕓 16:00–16:45</span><span>🏖️ laatste dip</span></div>
+  </div>
+
+  <div class="stop" data-stop="7">
+    <div class="top">
+      <div class="num">7</div>
+      <div class="name">Cala Massolivieri</div>
+      <span class="badge opt">Optie</span>
+    </div>
+    <div class="desc">Op de terugweg — kleine luwe baai, perfect voor een pauze als jullie moe zijn van varen tegen de wind.</div>
+    <div class="meta"><span>🕔 17:15</span><span>💤 pauze</span></div>
+  </div>
+
+  <div class="stop" data-stop="8">
+    <div class="top">
+      <div class="num">8</div>
+      <div class="name">Terug + aperitivo</div>
+    </div>
+    <div class="desc">Rustig terug de Porto Grande in. Douchen op Ortygia, glaasje wijn bij Fonte Aretusa.</div>
+    <div class="meta"><span>🕕 18:30</span><span>🍷 aperitivo</span></div>
+  </div>
+
+  <h2>Praktisch</h2>
+  <div class="tips">
+    <ul>
+      <li><b>Wind check:</b> <a href="https://www.windy.com/?37.05,15.29,12" target="_blank">windy.com</a> — max 15 knopen voor 40 pk</li>
+      <li><b>Ankeren:</b> lichtblauw (zand) ✅ · donker (posidonia zeegras) ❌</li>
+      <li><b>Plemmirio:</b> beschermd gebied — vissen en aanraken van dieren verboden</li>
+      <li>Mee: zonnebrand SPF50, 3L water, zwemvesten, snorkelset, luchtbed, parasol</li>
+      <li>Vóór 17u terug — dan begint de middagwind</li>
+    </ul>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // Actual stops (numbered markers)
+  const stops = [
+    { n:1, name:"Vertrek boothuur",              lat:37.0553, lng:15.2674, color:"#1f6feb" },
+    { n:2, name:"Ortygia (Castello Maniace)",    lat:37.0505, lng:15.2935, color:"#8250df" },
+    { n:3, name:"Plemmirio — Punta della Mola",  lat:37.0170, lng:15.3255, color:"#2ea043" },
+    { n:4, name:"Grotta Bagno della Regina",     lat:37.0110, lng:15.3280, color:"#8250df" },
+    { n:5, name:"Ognina (lunch)",                lat:36.9860, lng:15.3005, color:"#d29922" },
+    { n:6, name:"Fontane Bianche",               lat:36.9530, lng:15.2650, color:"#2ea043" },
+    { n:7, name:"Cala Massolivieri",             lat:37.0035, lng:15.3100, color:"#d29922" },
+    { n:8, name:"Terug boothuur",                lat:37.0553, lng:15.2674, color:"#1f6feb" },
+  ];
+
+  // SEA route - offshore, south via Ortygia, Plemmirio, Ognina, Fontane Bianche, back
+  const seaRoute = [
+    [37.0553, 15.2674],  // start boothuur
+    [37.0500, 15.2740],
+    [37.0430, 15.2820],
+    [37.0400, 15.2920],
+    [37.0420, 15.3020],  // net zuid Castello Maniace (offshore)
+    [37.0400, 15.3120],
+    [37.0330, 15.3200],
+    [37.0250, 15.3270],
+    [37.0170, 15.3300],  // Punta della Mola offshore
+    [37.0130, 15.3320],  // grotta offshore
+    [37.0060, 15.3260],  // rond zuidpunt Plemmirio
+    [37.0000, 15.3180],
+    [36.9930, 15.3100],  // langs kust naar Ognina
+    [36.9880, 15.3050],
+    [36.9860, 15.3005],  // Ognina
+    [36.9800, 15.2950],
+    [36.9700, 15.2830],  // richting Fontane Bianche
+    [36.9600, 15.2730],
+    [36.9530, 15.2650],  // Fontane Bianche offshore
+    [36.9600, 15.2730],  // terug noord
+    [36.9750, 15.2900],
+    [36.9880, 15.3050],
+    [37.0000, 15.3180],
+    [37.0035, 15.3100],  // Massolivieri
+    [37.0100, 15.3220],
+    [37.0200, 15.3290],
+    [37.0330, 15.3230],
+    [37.0400, 15.3140],
+    [37.0420, 15.3030],
+    [37.0400, 15.2930],
+    [37.0430, 15.2820],
+    [37.0500, 15.2740],
+    [37.0553, 15.2674],  // terug boothuur
+  ];
+
+  // SEA route - strictly offshore, going south out of Porto Grande, around Ortygia's south tip, along Plemmirio east coast
+  const seaRoute = [
+    [37.0553, 15.2674],  // start boothuur
+    [37.0500, 15.2740],  // zuid door Porto Grande
+    [37.0430, 15.2820],  // midden baai
+    [37.0400, 15.2920],  // richting uitgang haven
+    [37.0420, 15.3020],  // net zuid van Castello Maniace (offshore)
+    [37.0400, 15.3120],  // open water zuidoost van Ortygia
+    [37.0330, 15.3200],  // richting Plemmirio noordkust
+    [37.0250, 15.3270],  // offshore langs Plemmirio oostkust
+    [37.0170, 15.3300],  // ter hoogte Punta della Mola (offshore)
+    [37.0080, 15.3260],  // zuid langs Plemmirio
+    [37.0010, 15.3200],  // richting Massolivieri baai (offshore)
+    [37.0050, 15.3260],  // terug oost
+    [37.0130, 15.3310],  // ter hoogte grotta (offshore)
+    [37.0230, 15.3290],  // noord langs Plemmirio
+    [37.0330, 15.3230],  //
+    [37.0400, 15.3140],  //
+    [37.0420, 15.3030],  // rond zuidpunt Ortygia terug
+    [37.0400, 15.2930],  //
+    [37.0430, 15.2820],  //
+    [37.0500, 15.2740],  //
+    [37.0553, 15.2674],  // terug boothuur
+  ];
+
+  const map = L.map('map', { zoomControl: true }).setView([37.03, 15.31], 13);
+
+  const satLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles © Esri', maxZoom: 19
+  });
+  const labelLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19, opacity: 0.9
+  });
+  const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap', maxZoom: 19
+  });
+
+  satLayer.addTo(map);
+  labelLayer.addTo(map);
+
+  document.getElementById('sat').addEventListener('click', () => {
+    map.removeLayer(streetLayer);
+    satLayer.addTo(map); labelLayer.addTo(map);
+    document.getElementById('sat').classList.add('active');
+    document.getElementById('map-btn').classList.remove('active');
+  });
+  document.getElementById('map-btn').addEventListener('click', () => {
+    map.removeLayer(satLayer); map.removeLayer(labelLayer);
+    streetLayer.addTo(map);
+    document.getElementById('map-btn').classList.add('active');
+    document.getElementById('sat').classList.remove('active');
+  });
+
+  // Route line - through sea only
+  L.polyline(seaRoute, {
+    color:'#58a6ff', weight:4, opacity:0.9,
+    dashArray:'10,8', lineCap:'round', lineJoin:'round'
+  }).addTo(map);
+  // Glow effect
+  L.polyline(seaRoute, {
+    color:'#58a6ff', weight:12, opacity:0.15
+  }).addTo(map);
+
+  // Markers
+  const markers = {};
+  stops.forEach(s => {
+    const icon = L.divIcon({
+      html: `<div style="background:${s.color};color:#fff;width:34px;height:34px;border-radius:50%;
+                          display:flex;align-items:center;justify-content:center;font-weight:700;
+                          border:3px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,0.6);
+                          font-family:-apple-system,sans-serif;font-size:14px;">
+                ${s.n}
+             </div>`,
+      className:'', iconSize:[34,34], iconAnchor:[17,17]
+    });
+    const m = L.marker([s.lat, s.lng], { icon })
+      .addTo(map)
+      .bindPopup(`<b>${s.n}. ${s.name}</b><br><small>${s.lat.toFixed(4)}, ${s.lng.toFixed(4)}</small>`);
+    markers[s.n] = m;
+  });
+
+  // Click side card to focus marker
+  document.querySelectorAll('.stop').forEach(el => {
+    el.addEventListener('click', () => {
+      const n = parseInt(el.dataset.stop);
+      const m = markers[n];
+      if (m) {
+        map.setView(m.getLatLng(), 15, { animate: true });
+        m.openPopup();
+      }
+    });
+  });
+
+  map.fitBounds(seaRoute, { padding:[50,50] });
+</script>
+</body>
+</html>
