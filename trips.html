@@ -286,7 +286,31 @@ const spots = [
     desc: 'Bergdorpje boven de Pantalica-kloof — UNESCO natuurgebied met 5.000 rotsgraven en natuurlijke zwembaden in de rivier. Combineer dorp (honing, ricotta) met hike naar de laghetti.',
     img: 'img/pantalica.jpg',
     tips: ['Zwemmen in Anapo-rivier', 'Honing kopen — Sortino is beroemd', 'Neem stevige schoenen mee']
-  }
+  },
+  { id:'etna', name:'Etna — de vulkaan', cat:'highlight', lat:37.6997, lng:15.0003, drive:'1u15', time:'Halve/hele dag',
+    desc:'Europa\u2019s grootste actieve vulkaan (3.300m). Kabelbaan + jeep tot ~2900m, of wandel over zwarte lavavelden en uitgedoofde kraters. Wijnhuizen op de vruchtbare hellingen. Neem een trui mee — boven is het fris, ook in juli.',
+    img:'img/etna.jpg',
+    tips:['Funivia dell\u2019Etna vanaf Rifugio Sapienza','Boek jeep + gids voor de top','Etna DOC wijnproeverij op de zuidflank'] },
+  { id:'taormina', name:'Taormina', cat:'highlight', lat:37.8526, lng:15.2892, drive:'1u30', time:'Hele dag',
+    desc:'Glamoureus klifstadje met het beroemde Griekse theater — podium met de Etna én de zee als decor. Chique straatjes, Isola Bella baai onderaan (kabelbaantje omlaag). Druk in juli, maar één keer een must.',
+    img:'img/taormina.jpg',
+    tips:['Teatro Antico vroeg of laat (minder druk)','Zwemmen bij Isola Bella','Granita bij Bam Bar'] },
+  { id:'catania', name:'Catania', cat:'highlight', lat:37.5023, lng:15.0873, drive:'1u', time:'Halve/hele dag',
+    desc:'Rauwe barokke havenstad aan de voet van de Etna. Bruisende vismarkt (La Pescheria), lavazwarte gebouwen, beste streetfood van Sicilië. Piazza del Duomo met de olifant-fontein.',
+    img:'img/catania.jpg',
+    tips:['La Pescheria vismarkt (ochtend)','Streetfood: arancini + cipollina','Via Etnea met Etna-zicht'] },
+  { id:'modica', name:'Modica', cat:'highlight', lat:36.8590, lng:14.7616, drive:'1u15', time:'Halve dag',
+    desc:'Barokstad in een kloof, wereldberoemd om z\u2019n Azteekse chocolade (koud verwerkt, korrelig van structuur). Indrukwekkende trappenkerk San Giorgio. Ligt naast Ragusa — combineer ze.',
+    img:'img/modica.jpg',
+    tips:['Chocolade bij Antica Dolceria Bonajuto','Duomo di San Giorgio','Combi met Ragusa Ibla'] },
+  { id:'ragusa', name:'Ragusa Ibla', cat:'highlight', lat:36.9270, lng:14.7305, drive:'1u30', time:'Halve dag',
+    desc:'Misschien het mooiste barokstadje van allemaal — een honingkleurig labyrint op een heuvelrug. Duomo di San Giorgio, tuinen met uitzicht, Montalbano-filmlocatie. Magisch bij zonsondergang.',
+    img:'img/ragusa.jpg',
+    tips:['Loop Ragusa Superiore → Ibla via de trappen','Giardino Ibleo tuin','Diner met valleizicht'] },
+  { id:'neapolis', name:'Parco Archeologico (Neapolis)', cat:'highlight', lat:37.0755, lng:15.2760, drive:'10 min', time:'Ochtend',
+    desc:'Vlak bij Ortygia: het best bewaarde Griekse theater van Sicilië (nog steeds in gebruik), het Oor van Dionysius (grot met bizarre akoestiek) en een Romeins amfitheater. Ga vroeg — weinig schaduw.',
+    img:'img/neapolis.jpg',
+    tips:['Vroeg gaan (hitte + drukte)','Orecchio di Dionisio grot','Combineer met de catacomben'] }
 ];
 
 const cats = {
@@ -294,7 +318,8 @@ const cats = {
   stadje:  { label: 'Stadjes',    color: '#f59e0b' },
   strand:  { label: 'Stranden',   color: '#10b981' },
   berg:    { label: 'Natuur/Berg',color: '#ef4444' },
-  food:    { label: 'Food/Wijn',  color: '#a855f7' }
+  food:    { label: 'Food/Wijn',  color: '#a855f7' },
+  highlight:{ label: 'Highlights',  color: '#c084fc' }
 };
 
 let activeFilter = 'all';
@@ -320,7 +345,7 @@ function makeIcon(color, label) {
   });
 }
 
-const catEmoji = { basis:'⭐', stadje:'🏛', strand:'🏖', berg:'⛰', food:'🍷' };
+const catEmoji = { basis:'⭐', stadje:'🏛', strand:'🏖', berg:'⛰', food:'🍷', highlight:'🌟' };
 
 spots.forEach(s => {
   const marker = L.marker([s.lat, s.lng], { icon: makeIcon(cats[s.cat].color, catEmoji[s.cat]) }).addTo(map);
@@ -334,6 +359,12 @@ spots.forEach(s => {
 });
 
 // Filters
+function fitFilter(key){
+  if(key==='all'){ map.setView([36.95,15.10],10); return; }
+  const pts = spots.filter(s=>s.cat===key).map(s=>[s.lat,s.lng]);
+  if(pts.length===1) map.setView(pts[0],12);
+  else if(pts.length>1) map.fitBounds(pts,{padding:[60,60],maxZoom:12});
+}
 const filtersEl = document.getElementById('filters');
 const filterOptions = [{key:'all', label:'Alles'}, ...Object.entries(cats).map(([k,v])=>({key:k,label:v.label}))];
 filterOptions.forEach(f => {
@@ -345,6 +376,7 @@ filterOptions.forEach(f => {
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
     renderCards();
+    fitFilter(f.key);
   };
   filtersEl.appendChild(chip);
 });

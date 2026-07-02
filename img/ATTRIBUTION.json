@@ -103,5 +103,47 @@
     "commons_file": "Varco 27, Plemmirio 3.jpg",
     "src_page": "https://commons.wikimedia.org/wiki/File:Varco_27,_Plemmirio_3.jpg",
     "method": "commons:Plemmirio"
+  },
+  {
+    "key": "etna",
+    "file": "etna.jpg",
+    "commons_file": "Mt_Etna_and_Catania1.jpg",
+    "src_page": "https://en.wikipedia.org/wiki/Mount_Etna",
+    "method": "wiki:en:Mount Etna"
+  },
+  {
+    "key": "taormina",
+    "file": "taormina.jpg",
+    "commons_file": "Aerial_image_of_the_coast_of_Taormina_(view_from_the_southeast).jpg",
+    "src_page": "https://en.wikipedia.org/wiki/Taormina",
+    "method": "wiki:en:Taormina"
+  },
+  {
+    "key": "catania",
+    "file": "catania.jpg",
+    "commons_file": "Catania_vista_dall'alto_e_il_vulcano_Etna_a_sovrastarla.jpg",
+    "src_page": "https://en.wikipedia.org/wiki/Catania",
+    "method": "wiki:en:Catania"
+  },
+  {
+    "key": "modica",
+    "file": "modica.jpg",
+    "commons_file": "Veduta_di_Modica_01.jpg",
+    "src_page": "https://en.wikipedia.org/wiki/Modica",
+    "method": "wiki:en:Modica"
+  },
+  {
+    "key": "ragusa",
+    "file": "ragusa.jpg",
+    "commons_file": "Ragusa_Ibla,_Sicily.jpg",
+    "src_page": "https://en.wikipedia.org/wiki/Ragusa%2C_Sicily",
+    "method": "wiki:en:Ragusa, Italy"
+  },
+  {
+    "key": "neapolis",
+    "file": "neapolis.jpg",
+    "commons_file": "Teatro_greco_di_Siracusa_-_aerea.jpg",
+    "src_page": "https://en.wikipedia.org/wiki/Greek_Theatre_of_Syracuse",
+    "method": "wiki:en:Greek Theatre of Syracuse"
   }
 ]

@@ -245,6 +245,30 @@ const TRIPS = [
     desc:'Levend openluchtmuseum-dorp: oude ambachten (smid, olijfmolen) nog intact. Super charmant, weinig toeristen, mooi uitzicht over de vallei.',
     img:'img/buscemi.jpg',
     tips:['I Luoghi del Lavoro Contadino','Combi met Palazzolo','Niet op maandag (dicht)'] },
+  { id:'etna', name:'Etna — de vulkaan', cat:'highlight', lat:37.6997, lng:15.0003, drive:'1u15 auto', time:'Halve/hele dag',
+    desc:'Europa\u2019s grootste actieve vulkaan (3.300m). Kabelbaan + jeep tot ~2900m, of wandel over zwarte lavavelden en oude kraters. Wijnhuizen op de hellingen. Trui mee — boven is het fris, ook in juli.',
+    img:'img/etna.jpg',
+    tips:['Funivia dell\u2019Etna vanaf Rifugio Sapienza','Jeep + gids voor de top','Etna DOC wijnproeverij'] },
+  { id:'taormina', name:'Taormina', cat:'highlight', lat:37.8526, lng:15.2892, drive:'1u30 auto', time:'Hele dag',
+    desc:'Glamoureus klifstadje met het beroemde Griekse theater — Etna én zee als decor. Chique straatjes, Isola Bella baai onderaan. Druk in juli, maar één keer een must.',
+    img:'img/taormina.jpg',
+    tips:['Teatro Antico vroeg of laat','Zwemmen bij Isola Bella','Granita bij Bam Bar'] },
+  { id:'catania', name:'Catania', cat:'highlight', lat:37.5023, lng:15.0873, drive:'1u auto', time:'Halve/hele dag',
+    desc:'Rauwe barokke havenstad aan de voet van de Etna. Bruisende vismarkt (La Pescheria), lavazwarte gebouwen, top streetfood. Piazza del Duomo met olifant-fontein.',
+    img:'img/catania.jpg',
+    tips:['La Pescheria vismarkt (ochtend)','Arancini + cipollina','Via Etnea met Etna-zicht'] },
+  { id:'modica', name:'Modica', cat:'highlight', lat:36.8590, lng:14.7616, drive:'1u15 auto', time:'Halve dag',
+    desc:'Barokstad in een kloof, beroemd om z\u2019n Azteekse chocolade (koud verwerkt, korrelig). Trappenkerk San Giorgio. Ligt naast Ragusa.',
+    img:'img/modica.jpg',
+    tips:['Chocolade bij Bonajuto','Duomo di San Giorgio','Combi met Ragusa'] },
+  { id:'ragusa', name:'Ragusa Ibla', cat:'highlight', lat:36.9270, lng:14.7305, drive:'1u30 auto', time:'Halve dag',
+    desc:'Misschien het mooiste barokstadje — honingkleurig labyrint op een heuvelrug. Duomo di San Giorgio, tuinen met uitzicht, Montalbano-locatie. Magisch bij sunset.',
+    img:'img/ragusa.jpg',
+    tips:['Superiore → Ibla via de trappen','Giardino Ibleo','Diner met valleizicht'] },
+  { id:'neapolis', name:'Parco Archeologico (Neapolis)', cat:'highlight', lat:37.0755, lng:15.2760, drive:'10 min auto', time:'Ochtend',
+    desc:'Vlak bij Ortygia: best bewaarde Griekse theater van Sicilië (nog in gebruik), het Oor van Dionysius (grot met bizarre akoestiek) en een Romeins amfitheater. Ga vroeg.',
+    img:'img/neapolis.jpg',
+    tips:['Vroeg gaan (hitte + drukte)','Orecchio di Dionisio','Combi met de catacomben'] },
 ];
 
 const CATS = {
@@ -253,6 +277,7 @@ const CATS = {
   stadje:{ label:'Stadjes',     color:'#f5b642', emoji:'🏛' },
   strand:{ label:'Stranden',    color:'#12c99a', emoji:'🏖' },
   berg:  { label:'Natuur',      color:'#ff6b6b', emoji:'⛰' },
+  highlight:{ label:'Highlights', color:'#c084fc', emoji:'🌟' },
 };
 
 /* ---------- MAP ---------- */
@@ -268,6 +293,7 @@ const layers = {
   stadje: L.layerGroup().addTo(map),
   strand: L.layerGroup().addTo(map),
   berg:   L.layerGroup().addTo(map),
+  highlight: L.layerGroup().addTo(map),
 };
 const markerIndex = {};
 
@@ -334,7 +360,7 @@ TRIPS.forEach(t=>{
 });
 
 /* ---------- FILTERS ---------- */
-const order = ['home','boot','stadje','strand','berg'];
+const order = ['home','boot','stadje','strand','berg','highlight'];
 let active = 'all';
 const filtersEl = document.getElementById('filters');
 
@@ -360,7 +386,17 @@ function setFilter(key){
     if(show){ if(!map.hasLayer(layers[k])) layers[k].addTo(map); }
     else { if(map.hasLayer(layers[k])) map.removeLayer(layers[k]); }
   });
+  fitToFilter(key);
   renderCards();
+}
+function fitToFilter(key){
+  if(key==='all'){ map.setView([36.98,15.15],10); return; }
+  let pts=[];
+  if(key==='home') pts=[[HOME.lat,HOME.lng]];
+  else if(key==='boot') pts=BOAT_ROUTE.slice();
+  else pts=TRIPS.filter(t=>t.cat===key).map(t=>[t.lat,t.lng]);
+  if(pts.length===1) map.setView(pts[0],12);
+  else if(pts.length>1) map.fitBounds(pts,{padding:[60,60],maxZoom:12});
 }
 
 /* ---------- CARDS ---------- */
