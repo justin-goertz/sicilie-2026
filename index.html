@@ -4,186 +4,318 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sicilië 2026 — Justin, Manja & Menno</title>
-<meta property="og:title" content="Sicilië trip juli 2026 🇮🇹" />
-<meta property="og:description" content="Ortygia • Bootdag • Dagtrips" />
+<meta name="description" content="Onze Sicilië trip juli 2026 — Ortygia, bootdag & dagtrips. Met live weer, kaart en planning." />
+<meta property="og:title" content="Sicilië trip · juli 2026 🇮🇹" />
+<meta property="og:description" content="Ortygia • Bootdag • Dagtrips • Interactieve kaart" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #0a0e1a;
-    color: #e8ecf3;
-    min-height: 100vh;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
+  :root{
+    --bg:#070b16; --bg2:#0a1020; --panel:#0e1526; --panel2:#131c30;
+    --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+    --txt:#eaf0fb; --mut:#9fb0cc; --mut2:#6f83a3;
+    --cy:#7ee7ff; --bl:#4a7fff; --gold:#f5b642; --green:#12c99a; --coral:#ff6b6b;
+    --grad:linear-gradient(135deg,#7ee7ff 0%,#4a7fff 100%);
   }
-  a { color: inherit; text-decoration: none; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4,.serif{font-family:'Fraunces',Georgia,serif;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+  img{display:block;max-width:100%}
+  ::selection{background:rgba(126,231,255,.3)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;
+      padding:14px 22px;backdrop-filter:blur(14px);background:rgba(7,11,22,.55);border-bottom:1px solid transparent;transition:.3s}
+  nav.scrolled{background:rgba(7,11,22,.85);border-bottom-color:var(--line)}
+  nav .brand{font-family:'Fraunces',serif;font-weight:600;font-size:17px;display:flex;align-items:center;gap:9px}
+  nav .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--grad);box-shadow:0 0 14px var(--cy)}
+  nav .links{display:flex;gap:6px;align-items:center}
+  nav .links a{font-size:13.5px;color:var(--mut);padding:7px 12px;border-radius:9px;transition:.2s;font-weight:500}
+  nav .links a:hover{color:#fff;background:rgba(255,255,255,.06)}
+  .menu-btn{display:none;background:rgba(255,255,255,.07);border:1px solid var(--line);color:#fff;width:40px;height:40px;border-radius:10px;font-size:18px;cursor:pointer}
+  @media(max-width:860px){
+    nav .links{position:fixed;top:66px;right:14px;left:14px;flex-direction:column;align-items:stretch;gap:2px;
+      background:rgba(10,16,32,.97);border:1px solid var(--line);border-radius:16px;padding:10px;transform:translateY(-12px);opacity:0;pointer-events:none;transition:.25s}
+    nav .links.open{transform:none;opacity:1;pointer-events:auto}
+    nav .links a{padding:12px 14px;font-size:15px}
+    .menu-btn{display:block}
+  }
 
   /* HERO */
-  .hero {
-    position: relative;
-    min-height: 92vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    background:
-      linear-gradient(180deg, rgba(10,14,26,0.3) 0%, rgba(10,14,26,0.85) 70%, #0a0e1a 100%),
-      url('https://images.unsplash.com/photo-1596395819067-6300f6152f04?w=2000&auto=format&fit=crop') center/cover;
-  }
-  .hero-emoji { font-size: 60px; margin-bottom: 12px; animation: bob 3s ease-in-out infinite; }
-  @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-  h1 {
-    font-size: clamp(36px, 7vw, 68px);
-    font-weight: 800; letter-spacing: -1.5px; text-align: center;
-    background: linear-gradient(135deg, #fff 0%, #7ee7ff 60%, #4a7fff 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    margin-bottom: 12px;
-  }
-  .subtitle { font-size: clamp(15px, 2vw, 20px); color: #b8c4e0; text-align: center; max-width: 640px; line-height: 1.5; }
-  .date-badge {
-    display: inline-block; padding: 8px 20px;
-    background: rgba(74,127,255,0.15); border: 1px solid rgba(74,127,255,0.4);
-    border-radius: 30px; color: #7ee7ff; font-size: 14px; font-weight: 600;
-    margin-top: 24px; backdrop-filter: blur(10px);
-  }
-  .scroll-hint { margin-top: 40px; color: #7ee7ff; font-size: 13px; opacity: 0.7; animation: bob 2s ease-in-out infinite; }
+  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:110px 20px 60px;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0;background:#0a1830 center/cover;animation:kb 26s ease-in-out infinite alternate}
+  @keyframes kb{from{transform:scale(1.05)}to{transform:scale(1.16)}}
+  .hero-ov{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,11,22,.5),rgba(7,11,22,.55) 45%,rgba(7,11,22,.9) 85%,var(--bg))}
+  .hero-in{position:relative;z-index:2;max-width:900px;width:100%}
+  .flag{font-size:15px;letter-spacing:.32em;text-transform:uppercase;color:var(--cy);font-weight:600;margin-bottom:18px;opacity:0;animation:up .8s .1s forwards}
+  .hero h1{font-size:clamp(46px,10vw,104px);font-weight:700;color:#fff;opacity:0;animation:up .9s .2s forwards}
+  .hero h1 .it{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero .sub{margin-top:16px;font-size:clamp(16px,2.4vw,21px);color:var(--mut);opacity:0;animation:up .9s .35s forwards}
+  .hero .sub b{color:#fff;font-weight:600}
+  @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 
-  /* SECTIONS */
-  section.block { max-width: 1100px; margin: 0 auto; padding: 80px 20px 40px; }
-  .section-head { text-align: center; margin-bottom: 40px; }
-  .section-eyebrow { color: #7ee7ff; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
-  .section-head h2 {
-    font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -0.8px;
-    background: linear-gradient(135deg, #fff, #7ee7ff);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .section-lead { max-width: 640px; margin: 12px auto 0; color: #a8b3cf; font-size: 16px; line-height: 1.6; }
+  /* COUNTDOWN */
+  .cd{display:flex;gap:12px;justify-content:center;margin-top:34px;flex-wrap:wrap;opacity:0;animation:up .9s .5s forwards}
+  .cd .u{background:rgba(255,255,255,.05);border:1px solid var(--line2);border-radius:16px;padding:14px 18px;min-width:82px;backdrop-filter:blur(8px)}
+  .cd .n{font-family:'Fraunces',serif;font-size:34px;font-weight:700;color:#fff;line-height:1}
+  .cd .l{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut2);margin-top:6px}
+  .cd-note{margin-top:14px;font-size:14px;color:var(--mut2);opacity:0;animation:up .9s .6s forwards}
 
-  /* HIGHLIGHTS */
-  .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; max-width: 1000px; margin: -30px auto 0; padding: 0 20px; position: relative; z-index: 5; }
-  .highlight { background: rgba(19,26,43,0.85); backdrop-filter: blur(10px); padding: 20px; border-radius: 14px; border: 1px solid #1e2740; text-align: center; }
-  .highlight .num { font-size: 30px; font-weight: 800; background: linear-gradient(135deg, #7ee7ff, #4a7fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .highlight .lbl { font-size: 11px; color: #8a95b2; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  /* WEATHER STRIP */
+  .wx{position:relative;z-index:2;margin:26px auto 0;max-width:640px;width:100%;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;opacity:0;animation:up .9s .7s forwards}
+  .wx .chip{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:999px;padding:9px 15px;font-size:13.5px;color:var(--mut)}
+  .wx .chip b{color:#fff;font-weight:600}
+  .wx .chip .em{font-size:18px}
+  .scroll-hint{position:relative;z-index:2;margin-top:44px;color:var(--mut2);font-size:12px;letter-spacing:.2em;text-transform:uppercase;animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(7px);opacity:1}}
 
-  /* ACCOMMODATION */
-  .stay {
-    display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; align-items: center;
-    background: linear-gradient(135deg, #131a2b 0%, #0f1420 100%);
-    border-radius: 24px; border: 1px solid #1e2740; overflow: hidden;
-  }
-  .stay-img { width: 100%; height: 100%; min-height: 320px; object-fit: cover; }
-  .stay-body { padding: 36px; }
-  .stay-tag { display: inline-block; background: rgba(126,231,255,0.12); color: #7ee7ff; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-  .stay-body h3 { font-size: 28px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
-  .stay-body p.stay-desc { color: #a8b3cf; line-height: 1.7; font-size: 15px; margin-bottom: 20px; }
-  .stay-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-  .stay-fact { background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 10px; font-size: 13px; color: #d0d8ea; display:flex; align-items:center; gap:8px; }
-  .rating { display: flex; align-items: center; gap: 10px; color: #ffd166; font-weight: 600; }
-  .rating small { color: #8a95b2; font-weight: 400; }
+  /* LAYOUT */
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .block{padding:78px 0;position:relative}
+  .eyebrow{font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--cy);font-weight:600;margin-bottom:12px}
+  .head{text-align:center;max-width:720px;margin:0 auto 46px}
+  .head h2{font-size:clamp(30px,5vw,46px);color:#fff}
+  .head .lead{margin-top:14px;color:var(--mut);font-size:16.5px}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .rv.in{opacity:1;transform:none}
+
+  /* BIG MAP CTA */
+  .mapcta{position:relative;border-radius:26px;overflow:hidden;border:1px solid var(--line2);
+    background:linear-gradient(135deg,#0d1a33,#0a1226);padding:44px;display:grid;grid-template-columns:1.3fr 1fr;gap:30px;align-items:center}
+  .mapcta::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 80% 20%,rgba(74,127,255,.22),transparent 60%);pointer-events:none}
+  .mapcta .z{position:relative;z-index:1}
+  .mapcta h2{font-size:clamp(28px,4vw,40px);color:#fff;margin-bottom:12px}
+  .mapcta p{color:var(--mut);font-size:16px;margin-bottom:22px;max-width:460px}
+  .mapcta .prev{position:relative;z-index:1;border-radius:18px;overflow:hidden;border:1px solid var(--line2);aspect-ratio:4/3;
+    background:#0a1226 center/cover;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+  .mapcta .prev .live{position:absolute;top:12px;left:12px;background:rgba(18,201,154,.9);color:#03110c;font-size:11px;font-weight:700;
+    padding:5px 11px;border-radius:999px;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+  .mapcta .prev .live::before{content:"";width:7px;height:7px;border-radius:50%;background:#03110c;animation:pulse 1.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .btn{display:inline-flex;align-items:center;gap:9px;background:var(--grad);color:#04122e;font-weight:700;font-size:15.5px;
+    padding:14px 24px;border-radius:13px;transition:.25s;box-shadow:0 12px 30px rgba(74,127,255,.35)}
+  .btn:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(74,127,255,.5)}
+  .btn.ghost{background:rgba(255,255,255,.06);color:#fff;border:1px solid var(--line2);box-shadow:none}
+  .btn.ghost:hover{background:rgba(255,255,255,.12)}
+  @media(max-width:820px){.mapcta{grid-template-columns:1fr;padding:28px}.mapcta .prev{order:-1}}
+
+  /* STAY */
+  .stay{display:grid;grid-template-columns:1.05fr 1fr;gap:34px;align-items:stretch}
+  .stay .gal{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;min-height:440px}
+  .stay .gal a{border-radius:18px;overflow:hidden;border:1px solid var(--line);position:relative;background:#0a1226 center/cover;cursor:zoom-in;transition:.3s}
+  .stay .gal a:hover{transform:scale(.985);filter:brightness(1.08)}
+  .stay .gal a:first-child{grid-row:1/3}
+  .stay .gal a img{width:100%;height:100%;object-fit:cover}
+  .stay .info{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:32px;display:flex;flex-direction:column}
+  .fav{display:inline-flex;align-items:center;gap:7px;background:rgba(245,182,66,.14);color:var(--gold);font-size:12.5px;font-weight:600;
+    padding:6px 12px;border-radius:999px;align-self:flex-start;margin-bottom:16px}
+  .stay .info h2{font-size:30px;color:#fff}
+  .stay .info .meta{color:var(--cy);font-weight:600;margin:8px 0 16px;font-size:15px}
+  .stay .info p{color:var(--mut);font-size:15px;margin-bottom:14px}
+  .amen{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 20px}
+  .amen div{display:flex;align-items:center;gap:9px;font-size:14px;color:var(--txt);background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:10px 12px}
+  .stars{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:18px;border-top:1px solid var(--line);color:var(--mut);font-size:14px}
+  .stars b{color:#fff}
+  @media(max-width:820px){.stay{grid-template-columns:1fr}.stay .gal{min-height:340px}}
 
   /* STORY */
-  .story-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-  .story-text p { color: #c8d0e6; line-height: 1.8; font-size: 15px; margin-bottom: 14px; }
-  .story-text p.intro { font-size: 18px; color: #e8ecf3; }
-  .story-img { width: 100%; height: 380px; object-fit: cover; border-radius: 20px; }
+  .story{display:grid;grid-template-columns:1fr 1.1fr;gap:38px;align-items:center}
+  .story .im{border-radius:22px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/5;background:#0a1226 center/cover;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+  .story .tx p{color:var(--mut);margin-bottom:14px;font-size:16px}
+  .story .tx p.intro{color:#fff;font-size:19px;font-family:'Fraunces',serif;line-height:1.5}
+  .story .tx b{color:var(--cy);font-weight:600}
+  @media(max-width:820px){.story{grid-template-columns:1fr}.story .im{aspect-ratio:16/10}}
 
-  /* ORTYGIA TODO LIST */
-  .todo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 20px; }
-  .todo-item {
-    background: linear-gradient(180deg, #131a2b, #0f1420);
-    border: 1px solid #1e2740; border-radius: 16px; padding: 22px;
-    transition: transform 0.2s, border-color 0.2s;
-  }
-  .todo-item:hover { transform: translateY(-3px); border-color: #4a7fff; }
-  .todo-emoji { font-size: 28px; margin-bottom: 10px; }
-  .todo-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-  .todo-item p { font-size: 13px; color: #a8b3cf; line-height: 1.5; }
+  /* GRID CARDS (activities) */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;transition:.3s}
+  .tile:hover{transform:translateY(-5px);border-color:var(--line2);background:var(--panel2)}
+  .tile .em{font-size:30px;margin-bottom:12px}
+  .tile h4{font-size:17px;color:#fff;margin-bottom:7px}
+  .tile p{color:var(--mut);font-size:14px}
+  .tile b{color:var(--cy)}
 
-  /* CARDS (subpages) */
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
-  .card {
-    background: linear-gradient(180deg, #131a2b 0%, #0f1420 100%);
-    border-radius: 20px; overflow: hidden; cursor: pointer;
-    border: 1px solid #1e2740; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: block; position: relative;
-  }
-  .card:hover { transform: translateY(-6px); border-color: #4a7fff; box-shadow: 0 20px 60px rgba(74,127,255,0.25); }
-  .card-img { width: 100%; height: 220px; object-fit: cover; background: #1e2740; display: block; }
-  .card-badge { position: absolute; top: 16px; left: 16px; padding: 6px 14px; background: rgba(0,0,0,0.6); color: #fff; font-size: 12px; font-weight: 600; border-radius: 20px; backdrop-filter: blur(10px); text-transform: uppercase; letter-spacing: 0.5px; }
-  .card-body { padding: 24px; }
-  .card-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.3px; }
-  .card-desc { font-size: 14px; color: #a8b3cf; line-height: 1.6; margin-bottom: 16px; }
-  .card-meta { display: flex; gap: 16px; padding-top: 16px; border-top: 1px solid #1e2740; font-size: 12px; color: #7ee7ff; font-weight: 500; flex-wrap: wrap; }
-  .card-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; color: #4a7fff; font-weight: 600; font-size: 14px; }
+  /* PLAN CARDS */
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .pcard{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--panel);transition:.35s;display:flex;flex-direction:column}
+  .pcard:hover{transform:translateY(-6px);border-color:var(--line2);box-shadow:0 30px 60px rgba(0,0,0,.4)}
+  .pcard .ph{position:relative;aspect-ratio:16/9;background:#0a1226 center/cover;overflow:hidden}
+  .pcard .ph img{width:100%;height:100%;object-fit:cover;transition:.6s}
+  .pcard:hover .ph img{transform:scale(1.08)}
+  .pcard .badge{position:absolute;top:14px;left:14px;background:rgba(7,11,22,.7);backdrop-filter:blur(6px);border:1px solid var(--line2);
+    color:#fff;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px}
+  .pcard .bd{padding:24px;flex:1;display:flex;flex-direction:column}
+  .pcard h3{font-size:23px;color:#fff;margin-bottom:10px}
+  .pcard p{color:var(--mut);font-size:14.5px;margin-bottom:16px}
+  .pcard .st{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .pcard .st span{font-size:12px;color:var(--mut);background:var(--panel2);border:1px solid var(--line);padding:5px 10px;border-radius:8px}
+  .pcard .go{margin-top:auto;color:var(--cy);font-weight:600;font-size:14.5px;display:flex;align-items:center;gap:7px}
+  .pcard:hover .go{gap:12px}
+  @media(max-width:760px){.plans{grid-template-columns:1fr}}
 
-  /* MUST DO / TIPS */
-  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-  .tip {
-    background: linear-gradient(180deg, #131a2b, #0f1420);
-    border-radius: 16px; padding: 22px; border: 1px solid #1e2740;
-    display: flex; gap: 14px; align-items: flex-start;
-  }
-  .tip-icon { font-size: 26px; flex-shrink: 0; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: rgba(74,127,255,0.12); border-radius: 12px; }
-  .tip h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-  .tip p { font-size: 13px; color: #a8b3cf; line-height: 1.55; }
+  /* TIMELINE */
+  .tl{position:relative;max-width:820px;margin:0 auto;padding-left:34px}
+  .tl::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--cy),var(--bl),transparent)}
+  .tl .day{position:relative;margin-bottom:30px}
+  .tl .day::before{content:"";position:absolute;left:-34px;top:4px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:3px solid var(--cy);box-shadow:0 0 12px rgba(126,231,255,.6)}
+  .tl .dh{display:flex;align-items:baseline;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+  .tl .dh .d{font-family:'Fraunces',serif;font-size:22px;color:#fff;font-weight:600}
+  .tl .dh .t{font-size:13px;color:var(--gold);font-weight:600;letter-spacing:.04em}
+  .tl ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+  .tl li{color:var(--mut);font-size:15px;padding-left:22px;position:relative}
+  .tl li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--bl)}
+  .tl li b{color:#fff;font-weight:600}
 
-  .footer { text-align: center; padding: 60px 20px 40px; color: #6a7590; font-size: 13px; border-top: 1px solid #1e2740; margin-top: 40px; }
-  .footer a { color: #7ee7ff; }
+  /* EETEN */
+  .eat{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+  .eat .e{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;transition:.3s}
+  .eat .e:hover{border-color:var(--line2);transform:translateY(-4px)}
+  .eat .e .em{font-size:26px;margin-bottom:10px}
+  .eat .e h4{color:#fff;font-size:16px;margin-bottom:6px}
+  .eat .e p{color:var(--mut);font-size:13.5px}
+  .eat .e .tag{display:inline-block;margin-top:10px;font-size:11.5px;color:var(--gold);background:rgba(245,182,66,.12);padding:3px 9px;border-radius:7px;font-weight:600}
 
-  @media (max-width: 768px) {
-    .stay { grid-template-columns: 1fr; }
-    .stay-body { padding: 24px; }
-    .story-wrap { grid-template-columns: 1fr; }
-    .story-img { height: 260px; }
-    section.block { padding: 60px 20px 20px; }
-  }
+  /* HANDIG */
+  .handig{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+  .panelbox{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:26px}
+  .panelbox h3{color:#fff;font-size:21px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  details{border-bottom:1px solid var(--line);padding:12px 0}
+  details:last-child{border-bottom:none}
+  summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;color:#fff;font-weight:600;font-size:15px}
+  summary::-webkit-details-marker{display:none}
+  summary .ar{color:var(--cy);transition:.25s}
+  details[open] summary .ar{transform:rotate(90deg)}
+  details .ans{color:var(--mut);font-size:14.5px;margin-top:10px}
+  details .ans .it{color:var(--cy);font-style:italic}
+  .pack{display:flex;flex-direction:column;gap:2px}
+  .pack label{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;cursor:pointer;transition:.2s;color:var(--txt);font-size:14.5px}
+  .pack label:hover{background:var(--panel2)}
+  .pack input{appearance:none;width:20px;height:20px;border:2px solid var(--mut2);border-radius:6px;cursor:pointer;position:relative;flex-shrink:0;transition:.2s}
+  .pack input:checked{background:var(--grad);border-color:transparent}
+  .pack input:checked::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#04122e;font-size:13px;font-weight:800}
+  .pack input:checked + span{color:var(--mut2);text-decoration:line-through}
+  .pack-bar{height:7px;border-radius:999px;background:var(--panel2);overflow:hidden;margin:6px 0 16px}
+  .pack-bar i{display:block;height:100%;width:0;background:var(--grad);transition:.4s}
+  @media(max-width:820px){.handig{grid-template-columns:1fr}}
+
+  /* TIPS */
+  .tips{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .tip{display:flex;gap:15px;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px;transition:.3s}
+  .tip:hover{border-color:var(--line2);transform:translateX(4px)}
+  .tip .ic{font-size:24px;flex-shrink:0;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:rgba(74,127,255,.12);border-radius:12px}
+  .tip h4{color:#fff;font-size:15.5px;margin-bottom:4px}
+  .tip p{color:var(--mut);font-size:13.5px}
+  .tip b{color:var(--cy)}
+  @media(max-width:680px){.tips{grid-template-columns:1fr}}
+
+  /* FOOTER */
+  footer{text-align:center;padding:56px 22px 70px;border-top:1px solid var(--line);color:var(--mut2);font-size:14px;margin-top:40px}
+  footer .fnav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+  footer .fnav a{color:var(--mut);font-size:13.5px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;transition:.2s}
+  footer .fnav a:hover{color:#fff;border-color:var(--line2);background:rgba(255,255,255,.04)}
+  footer .heart{color:var(--coral)}
+
+  /* LIGHTBOX */
+  .lb{position:fixed;inset:0;z-index:500;background:rgba(3,6,14,.94);display:none;align-items:center;justify-content:center;padding:30px;cursor:zoom-out;backdrop-filter:blur(6px)}
+  .lb.on{display:flex}
+  .lb img{max-width:94vw;max-height:90vh;border-radius:14px;box-shadow:0 40px 90px rgba(0,0,0,.6)}
+  .lb .x{position:absolute;top:20px;right:24px;color:#fff;font-size:34px;cursor:pointer;opacity:.8}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
+<nav id="nav">
+  <a class="brand" href="#top"><span class="dot"></span>Sicilië '26</a>
+  <div class="links" id="links">
+    <a href="#stay">Verblijf</a>
+    <a href="#ortygia">Ortygia</a>
+    <a href="./kaart.html">Kaart</a>
+    <a href="#plans">Plannen</a>
+    <a href="#planning">Planning</a>
+    <a href="#eten">Eten</a>
+    <a href="#handig">Handig</a>
+  </div>
+  <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+</nav>
+
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-emoji">🇮🇹⛵🌊</div>
-  <h1>Sicilië 2026</h1>
-  <p class="subtitle">Ortygia als basis — bootdag op de Ionische Zee, barokke stadjes, verborgen vissersdorpjes en het mooiste zwemwater van Italië</p>
-  <div class="date-badge">📅 Juli 2026 • Justin, Manja & Menno</div>
-  <div class="scroll-hint">↓ Scroll down</div>
+<header class="hero" id="top">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-in">
+    <div class="flag">🇮🇹 · 5–7 juli 2026 · Ortygia</div>
+    <h1>Sicilië <span class="it">2026</span></h1>
+    <p class="sub">Met <b>Justin</b>, <b>Manja</b> &amp; <b>Menno</b> — zon, zee &amp; een bootje 🌊</p>
+
+    <div class="cd" id="cd">
+      <div class="u"><div class="n" id="cd-d">–</div><div class="l">Dagen</div></div>
+      <div class="u"><div class="n" id="cd-h">–</div><div class="l">Uren</div></div>
+      <div class="u"><div class="n" id="cd-m">–</div><div class="l">Min</div></div>
+      <div class="u"><div class="n" id="cd-s">–</div><div class="l">Sec</div></div>
+    </div>
+    <div class="cd-note" id="cdNote">tot we in Ortygia zijn ☀️</div>
+
+    <div class="wx" id="wx">
+      <div class="chip"><span class="em">⏳</span> Weer laadt…</div>
+    </div>
+  </div>
+  <div class="scroll-hint">scroll ↓</div>
+</header>
+
+<!-- BIG MAP CTA -->
+<section class="block" id="kaart-cta">
+  <div class="wrap">
+    <div class="mapcta rv">
+      <div class="z">
+        <div class="eyebrow">Alles op één plek</div>
+        <h2>De interactieve kaart</h2>
+        <p>Ons appartement, de complete bootroute én alle dagtrips — samen op één bewegende kaart. Filter op stadjes, stranden of het water, en klik voor foto's, tips en reistijd.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a class="btn" href="./kaart.html">🗺️ Open de kaart</a>
+          <a class="btn ghost" href="#plans">Bekijk de plannen</a>
+        </div>
+      </div>
+      <a class="prev" href="./kaart.html" id="mapPrev" aria-label="Open kaart">
+        <span class="live">LIVE KAART</span>
+      </a>
+    </div>
+  </div>
 </section>
 
-<!-- QUICK STATS -->
-<div class="highlights">
-  <div class="highlight"><div class="num">🏠</div><div class="lbl">Ortygia apt</div></div>
-  <div class="highlight"><div class="num">1</div><div class="lbl">Bootdag</div></div>
-  <div class="highlight"><div class="num">14</div><div class="lbl">Dagtrips</div></div>
-  <div class="highlight"><div class="num">≤1u</div><div class="lbl">Rijden max</div></div>
-  <div class="highlight"><div class="num">🏖</div><div class="lbl">Zee & zon</div></div>
-</div>
-
-<!-- ACCOMMODATION -->
+<!-- STAY -->
 <section class="block" id="stay">
-  <div class="section-head">
-    <div class="section-eyebrow">Onze basis</div>
-    <h2>Ortigia Sea View Apartment</h2>
-    <p class="section-lead">Een gerenoveerd appartement van 220m² in een 19e-eeuws pand pal aan het plein met uitzicht op de haven van Ortygia. 3 slaapkamers, 3 badkamers, hoge plafonds en Franse ramen — een van de best beoordeelde huizen op heel Airbnb.</p>
-  </div>
-
-  <div class="stay">
-    <img class="stay-img" src="https://a0.muscache.com/im/pictures/miso/Hosting-12345/original/placeholder.jpg" onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop'" alt="Ortigia apartment" />
-    <div class="stay-body">
-      <div class="stay-tag">⭐ Guest Favourite</div>
-      <h3>3 slaapkamers • 8 gasten • Zeezicht</h3>
-      <p class="stay-desc">Op de eerste verdieping van een historisch gebouw aan Ortygia's plein, met zicht op de marina en de Grand Harbour. Recent gerenoveerd met een mix van antiek en modern, hoge plafonds en een 19e-eeuws fresco op één van de slaapkamerplafonds.</p>
-      <div class="stay-facts">
-        <div class="stay-fact">🛏 3 slaapkamers</div>
-        <div class="stay-fact">🚿 3 badkamers</div>
-        <div class="stay-fact">📐 220m²</div>
-        <div class="stay-fact">❄ A/C in elke kamer</div>
-        <div class="stay-fact">📶 Wi-Fi + Nespresso</div>
-        <div class="stay-fact">🅿️ Parking op plein</div>
+  <div class="wrap">
+    <div class="head rv">
+      <div class="eyebrow">Onze uitvalsbasis</div>
+      <h2>Ortigia Sea View Apartment</h2>
+      <p class="lead">Ons thuis voor deze trip — pal aan het plein, met uitzicht op de haven.</p>
+    </div>
+    <div class="stay rv">
+      <div class="gal">
+        <a data-lb="img/slaapkamer-fresco.png"><img src="img/slaapkamer-fresco.png" alt="Slaapkamer met kroonluchter en fresco plafond" loading="lazy"></a>
+        <a data-lb="img/slaapkamer-goud.png"><img src="img/slaapkamer-goud.png" alt="Slaapkamer met gouden sprei" loading="lazy"></a>
+        <a data-lb="img/kaart-appartement.png"><img src="img/kaart-appartement.png" alt="Locatie op de kaart in Ortygia" loading="lazy"></a>
       </div>
-      <div class="rating">
-        ⭐ 4.99 <small>· 180 reviews · Superhost Anna Enrica</small>
+      <div class="info">
+        <span class="fav">⭐ Guest Favourite · Superhost</span>
+        <h2>Zeezicht op de Grand Harbour</h2>
+        <div class="meta">3 slaapkamers · 8 gasten · 220m²</div>
+        <p>Een gerenoveerd appartement in een 19e-eeuws pand pal aan het plein op Ortygia, met zicht op de marina en de Grand Harbour. Een mix van antiek en modern, hoge plafonds, Franse ramen — en een echt 19e-eeuws fresco op één van de slaapkamerplafonds.</p>
+        <div class="amen">
+          <div>🛏 3 slaapkamers</div>
+          <div>🚿 3 badkamers</div>
+          <div>❄️ A/C in elke kamer</div>
+          <div>📶 Wi-Fi + Nespresso</div>
+          <div>📐 220m²</div>
+          <div>🅿️ Parking op plein</div>
+        </div>
+        <div class="stars">⭐ <b>4.99</b> · 180 reviews · Superhost <b>Anna Enrica</b></div>
       </div>
     </div>
   </div>
@@ -191,176 +323,346 @@
 
 <!-- ORTYGIA STORY -->
 <section class="block" id="ortygia">
-  <div class="section-head">
-    <div class="section-eyebrow">Waar we zitten</div>
-    <h2>Wat maakt Ortygia zo bijzonder?</h2>
-  </div>
-
-  <div class="story-wrap">
-    <img class="story-img" src="https://images.unsplash.com/photo-1583229502683-cf7f2f2a5d2f?w=1200&auto=format&fit=crop" onerror="this.src='https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1200&auto=format&fit=crop'" alt="Ortygia" />
-    <div class="story-text">
-      <p class="intro">Ortygia is het historische hart van Syracuse — een klein eiland, verbonden met vasteland Sicilië via twee bruggetjes. Nog geen 1 km² groot, maar 2.700 jaar geschiedenis.</p>
-      <p>De oude Grieken stichtten hier in 734 v.Chr. hun kolonie, en je loopt er letterlijk overheen: Griekse tempelzuilen zitten verwerkt in de muren van de <b>Duomo</b>, en op elke hoek vind je een barok pleintje, een vissersbootje of een oude palazzo met wasgoed voor de ramen.</p>
-      <p>Overdag drink je espresso op <b>Piazza Duomo</b>, 's middags spring je van de rotsen bij <b>Forte Vigliena</b> zo de zee in, en 's avonds slenter je door smalle steegjes op zoek naar cannoli en een glas Nero d'Avola.</p>
-      <p>Geen auto's nodig, alles op loopafstand, altijd zeewind. Dít is waarom mensen verliefd worden op Sicilië.</p>
+  <div class="wrap">
+    <div class="head rv">
+      <div class="eyebrow">Waar we zitten</div>
+      <h2>Wat maakt Ortygia zo bijzonder?</h2>
     </div>
-  </div>
+    <div class="story rv">
+      <div class="im" style="background-image:url('https://images.unsplash.com/photo-1583229502683-cf7f2f2a5d2f?w=1000&auto=format&fit=crop')" id="ortyImg"></div>
+      <div class="tx">
+        <p class="intro">Ortygia is het historische hart van Syracuse — een klein eiland, verbonden met Sicilië via twee bruggetjes. Nog geen 1 km² groot, maar 2.700 jaar geschiedenis.</p>
+        <p>De oude Grieken stichtten hier in 734 v.Chr. hun kolonie, en je loopt er letterlijk overheen: Griekse tempelzuilen zitten verwerkt in de muren van de <b>Duomo</b>, en op elke hoek vind je een barok pleintje, een vissersbootje of een oude palazzo met wasgoed voor de ramen.</p>
+        <p>Overdag drink je espresso op <b>Piazza Duomo</b>, 's middags spring je van de rotsen bij <b>Forte Vigliena</b> zo de zee in, en 's avonds slenter je door smalle steegjes op zoek naar cannoli en een glas Nero d'Avola.</p>
+        <p>Geen auto's nodig, alles op loopafstand, altijd zeewind. Dít is waarom mensen verliefd worden op Sicilië.</p>
+      </div>
+    </div>
 
-  <!-- Things to do IN Ortygia -->
-  <div style="margin-top:50px">
-    <div class="section-eyebrow" style="text-align:center;margin-bottom:20px">Op het eiland zelf</div>
-    <div class="todo-grid">
-      <div class="todo-item">
-        <div class="todo-emoji">⛪</div>
-        <h4>Duomo di Siracusa</h4>
-        <p>Barokke kathedraal gebouwd óp een Griekse tempel uit de 5e eeuw v.Chr. Zuilen zichtbaar in de muren.</p>
-      </div>
-      <div class="todo-item">
-        <div class="todo-emoji">💧</div>
-        <h4>Fonte Aretusa</h4>
-        <p>Zoetwaterbron mét papyrusplanten (uniek in Europa!) direct aan de zee. Mythisch verhaal van een nimf.</p>
-      </div>
-      <div class="todo-item">
-        <div class="todo-emoji">🏰</div>
-        <h4>Castello Maniace</h4>
-        <p>13e-eeuws kasteel op de punt van het eiland. Ga voor zonsondergang — spectaculair uitzicht.</p>
-      </div>
-      <div class="todo-item">
-        <div class="todo-emoji">🐟</div>
-        <h4>Mercato di Ortigia</h4>
-        <p>Ochtendmarkt met vis, olijven, kaas, tomaten. Ga bij <b>Fratelli Burgio</b> voor een legendarische antipasti-plank.</p>
-      </div>
-      <div class="todo-item">
-        <div class="todo-emoji">🌊</div>
-        <h4>Zwemmen bij Forte Vigliena</h4>
-        <p>Rotsplateau aan de oostkust van Ortygia. Ladders in het water, kristalhelder, gratis. Fav van locals.</p>
-      </div>
-      <div class="todo-item">
-        <div class="todo-emoji">🍷</div>
-        <h4>Aperitivo op Piazza Duomo</h4>
-        <p>Het mooiste plein van heel Zuid-Italië. Spritz bij zonsondergang op de trappen van de kathedraal.</p>
-      </div>
-      <div class="todo-item">
-        <div class="todo-emoji">🎭</div>
-        <h4>Teatro Greco (Neapolis)</h4>
-        <p>Grieks amfitheater uit 5e eeuw v.Chr. — 15 min lopen van Ortygia. In juli soms live opvoeringen.</p>
-      </div>
-      <div class="todo-item">
-        <div class="todo-emoji">🍨</div>
-        <h4>Gelato + Granita</h4>
-        <p>Ontbijt van locals: <b>granita di mandorla</b> (amandel) met een warme brioche. Bij <b>Gelati Bianca</b>.</p>
+    <div style="margin-top:52px" class="rv">
+      <div class="eyebrow" style="text-align:center;margin-bottom:22px">Op het eiland zelf</div>
+      <div class="grid">
+        <div class="tile"><div class="em">⛪</div><h4>Duomo di Siracusa</h4><p>Barokke kathedraal gebouwd óp een Griekse tempel uit de 5e eeuw v.Chr. Zuilen zichtbaar in de muren.</p></div>
+        <div class="tile"><div class="em">💧</div><h4>Fonte Aretusa</h4><p>Zoetwaterbron mét papyrusplanten (uniek in Europa!) direct aan zee. Mythisch verhaal van een nimf.</p></div>
+        <div class="tile"><div class="em">🏰</div><h4>Castello Maniace</h4><p>13e-eeuws kasteel op de punt van het eiland. Ga voor zonsondergang — spectaculair uitzicht.</p></div>
+        <div class="tile"><div class="em">🐟</div><h4>Mercato di Ortigia</h4><p>Ochtendmarkt met vis, olijven, kaas, tomaten. Bij <b>Fratelli Burgio</b> voor een legendarische antipasti-plank.</p></div>
+        <div class="tile"><div class="em">🌊</div><h4>Zwemmen bij Forte Vigliena</h4><p>Rotsplateau aan de oostkust van Ortygia. Ladders in het water, kristalhelder, gratis. Fav van locals.</p></div>
+        <div class="tile"><div class="em">🍷</div><h4>Aperitivo op Piazza Duomo</h4><p>Het mooiste plein van Zuid-Italië. Spritz bij zonsondergang op de trappen van de kathedraal.</p></div>
+        <div class="tile"><div class="em">🎭</div><h4>Teatro Greco</h4><p>Grieks amfitheater uit 5e eeuw v.Chr. — 15 min lopen. In juli soms live opvoeringen.</p></div>
+        <div class="tile"><div class="em">🍨</div><h4>Granita + Brioche</h4><p>Ontbijt van locals: <b>granita di mandorla</b> (amandel) met warme brioche. Bij <b>Gelati Bianca</b>.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MAIN CARDS: BOOT + TRIPS -->
+<!-- PLANS -->
 <section class="block" id="plans">
-  <div class="section-head">
-    <div class="section-eyebrow">Wat gaan we doen</div>
-    <h2>Onze plannen</h2>
-    <p class="section-lead">Twee grote hoofdstukken: één dag op het water (7 juli), en de rest van de tijd exploring vanuit Ortygia met de auto.</p>
-  </div>
-
-  <div class="cards">
-
-    <a class="card" href="./boot.html">
-      <div style="position:relative">
-        <div class="card-badge">⛵ 7 juli</div>
-        <img class="card-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop" />
-      </div>
-      <div class="card-body">
-        <div class="card-title">De Bootdag 🌊</div>
-        <div class="card-desc">
-          40pk bootje van Porto Grande langs Plemmirio, Grotta del Bue Marino, Ognina en Fontane Bianche.
-          Snorkelen bij Capo Murro di Porco, lunch aan wal, chillen in kristalhelder water.
+  <div class="wrap">
+    <div class="head rv">
+      <div class="eyebrow">Wat gaan we doen</div>
+      <h2>Onze plannen</h2>
+      <p class="lead">Twee hoofdstukken: één dag op het water (7 juli), en de rest exploring vanuit Ortygia met de auto.</p>
+    </div>
+    <div class="plans rv">
+      <a class="pcard" href="./boot.html">
+        <div class="ph"><span class="badge">⛵ 7 juli</span><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop" alt="Boot" loading="lazy"></div>
+        <div class="bd">
+          <h3>De Bootdag 🌊</h3>
+          <p>40pk bootje van Porto Grande langs Plemmirio, Grotta del Bue Marino, Ognina en Fontane Bianche. Snorkelen bij Capo Murro di Porco, lunch aan wal, chillen in kristalhelder water.</p>
+          <div class="st"><span>~2,5u varen</span><span>~35 km</span><span>8 stops</span><span>Snorkelspots</span></div>
+          <div class="go">Bekijk de route →</div>
         </div>
-        <div class="card-meta">
-          <span>~2,5u varen</span>
-          <span>~35 km</span>
-          <span>8 stops</span>
-          <span>Snorkelspots</span>
+      </a>
+      <a class="pcard" href="./trips.html">
+        <div class="ph"><span class="badge">🚗 Auto trips</span><img src="https://images.unsplash.com/photo-1602928321679-560bb453f190?w=800&auto=format&fit=crop" alt="Dorpje" loading="lazy"></div>
+        <div class="bd">
+          <h3>Dagtrips vanuit Ortygia 🏛</h3>
+          <p>Barok Noto, vissersdorpje Marzamemi, Vendicari natuurreservaat, hidden gems zoals Ferla en Brucoli. Alles binnen 1 uur rijden. Filter op wat je zin in hebt.</p>
+          <div class="st"><span>13 spots</span><span>Filter per type</span><span>Foto's + tips</span></div>
+          <div class="go">Ontdek de trips →</div>
         </div>
-        <div class="card-cta">Bekijk de route op de kaart →</div>
-      </div>
-    </a>
-
-    <a class="card" href="./trips.html">
-      <div style="position:relative">
-        <div class="card-badge">🚗 Auto trips</div>
-        <img class="card-img" src="https://images.unsplash.com/photo-1602928321679-560bb453f190?w=800&auto=format&fit=crop" />
-      </div>
-      <div class="card-body">
-        <div class="card-title">Dagtrips vanuit Ortygia 🏛</div>
-        <div class="card-desc">
-          Barok Noto, vissersdorpje Marzamemi, Vendicari natuurreservaat, hidden gems zoals Ferla en Brucoli.
-          Alles binnen 1 uur rijden. Filter op wat je zin in hebt.
-        </div>
-        <div class="card-meta">
-          <span>14 spots</span>
-          <span>Filter per type</span>
-          <span>Foto's + tips</span>
-        </div>
-        <div class="card-cta">Ontdek de trips →</div>
-      </div>
-    </a>
-
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:26px" class="rv">
+      <a class="btn" href="./kaart.html">🗺️ …of bekijk alles samen op de kaart</a>
+    </div>
   </div>
 </section>
 
-<!-- MUST DO / TIPS -->
+<!-- PLANNING TIMELINE -->
+<section class="block" id="planning">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="eyebrow">Dag voor dag</div>
+      <h2>Losjes plan</h2>
+      <p class="lead">Niks moet, alles mag. Een ruwe schets — met genoeg ruimte om te zwemmen en te chillen.</p>
+    </div>
+    <div class="tl rv">
+      <div class="day">
+        <div class="dh"><span class="d">Zondag 5 juli</span><span class="t">AANKOMST</span></div>
+        <ul>
+          <li>Inchecken bij het appartement, koffers weg, <b>Nespresso</b> aan ☕</li>
+          <li>Rondje Ortygia lopen — <b>Piazza Duomo</b>, Fonte Aretusa, steegjes</li>
+          <li>Eerste duik bij <b>Forte Vigliena</b> als het nog warm is</li>
+          <li>Diner op een plein + <b>aperitivo</b> bij zonsondergang</li>
+        </ul>
+      </div>
+      <div class="day">
+        <div class="dh"><span class="d">Maandag 6 juli</span><span class="t">DAGTRIP OF STRAND</span></div>
+        <ul>
+          <li>Ochtend: markt op Ortygia, granita + brioche als ontbijt</li>
+          <li>Auto pakken → <b>Noto</b> (barok) of <b>Marzamemi</b> (vissersdorp) — zie <a href="./trips.html" style="color:var(--cy)">dagtrips</a></li>
+          <li>Middag zwemmen bij <b>Vendicari</b> of <b>Fontane Bianche</b></li>
+          <li>Terug naar Ortygia voor diner, vroeg naar bed — morgen bootdag!</li>
+        </ul>
+      </div>
+      <div class="day">
+        <div class="dh"><span class="d">Dinsdag 7 juli</span><span class="t">⛵ BOOTDAG</span></div>
+        <ul>
+          <li>Ochtend: bootje ophalen bij <b>Porto Grande</b>, spullen &amp; water mee</li>
+          <li>Varen langs <b>Plemmirio</b>, snorkelen bij <b>Capo Murro di Porco</b></li>
+          <li>Zeegrotten, lunch aan wal, zwemmen bij <b>Fontane Bianche</b></li>
+          <li>Zie de volledige route op de <a href="./kaart.html" style="color:var(--cy)">kaart</a> 🗺️</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EETEN -->
+<section class="block" id="eten">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="eyebrow">Buik vol, hart blij</div>
+      <h2>Eten &amp; drinken</h2>
+      <p class="lead">Eet Siciliaans — geen pizza (dat is voor Napels). Dit moet je proberen.</p>
+    </div>
+    <div class="eat rv">
+      <div class="e"><div class="em">🍝</div><h4>Pasta alla Norma</h4><p>Aubergine, tomaat, ricotta salata. Het Siciliaanse gerecht bij uitstek.</p><span class="tag">Must-try</span></div>
+      <div class="e"><div class="em">🍚</div><h4>Arancini</h4><p>Gefrituurde rijstballen met ragù of mozzarella. Perfecte lunch to-go.</p><span class="tag">Streetfood</span></div>
+      <div class="e"><div class="em">🐟</div><h4>Pesce spada</h4><p>Zwaardvis van de grill — vers uit de zee bij de markt. Ook als involtini.</p><span class="tag">Vers</span></div>
+      <div class="e"><div class="em">🍥</div><h4>Cannoli</h4><p>Krokante rol met verse ricotta. Laat 'm pas vullen als je bestelt.</p><span class="tag">Dessert</span></div>
+      <div class="e"><div class="em">🍧</div><h4>Granita di mandorla</h4><p>Amandel-granita met brioche = ontbijt van locals. Serieus proberen.</p><span class="tag">Ontbijt</span></div>
+      <div class="e"><div class="em">🍷</div><h4>Nero d'Avola</h4><p>De rode topwijn van Sicilië. Grillo voor wit, Etna-wijnen voor fijnproevers.</p><span class="tag">Wijn</span></div>
+      <div class="e"><div class="em">🍆</div><h4>Caponata</h4><p>Zoetzure aubergine-stoof. Koud als antipasti, heerlijk bij brood.</p><span class="tag">Antipasti</span></div>
+      <div class="e"><div class="em">🧀</div><h4>Fratelli Burgio</h4><p>Antipasti-plank op de Ortygia-markt — kazen, worst, olijven. Legendarisch.</p><span class="tag">Adresje</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- HANDIG -->
+<section class="block" id="handig">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="eyebrow">Praktisch</div>
+      <h2>Handig om te weten</h2>
+    </div>
+    <div class="handig rv">
+      <div class="panelbox">
+        <h3>🇮🇹 Italiaans voor onderweg</h3>
+        <details open><summary>Begroeten <span class="ar">›</span></summary><div class="ans"><span class="it">Buongiorno / Buonasera</span> — Goedendag / -avond · <span class="it">Grazie mille</span> — Heel erg bedankt · <span class="it">Prego</span> — Graag gedaan / alsjeblieft</div></details>
+        <details><summary>Bestellen <span class="ar">›</span></summary><div class="ans"><span class="it">Un caffè, per favore</span> — Een espresso a.u.b. · <span class="it">Il conto, per favore</span> — De rekening a.u.b. · <span class="it">Acqua frizzante / naturale</span> — Bruisend / plat water · <span class="it">Buonissimo!</span> — Heerlijk!</div></details>
+        <details><summary>Op het water / strand <span class="ar">›</span></summary><div class="ans"><span class="it">Dov'è la spiaggia?</span> — Waar is het strand? · <span class="it">Posso noleggiare…</span> — Kan ik … huren? · <span class="it">Che caldo!</span> — Wat warm!</div></details>
+        <details><summary>Handig <span class="ar">›</span></summary><div class="ans"><span class="it">Scusi</span> — Sorry / pardon · <span class="it">Quanto costa?</span> — Wat kost het? · <span class="it">Non parlo italiano</span> — Ik spreek geen Italiaans · <span class="it">Aiuto!</span> — Help!</div></details>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13.5px">
+          📞 <b style="color:#fff">112</b> — Europees alarmnummer · 🌡 In juli 30-35°, zee ~26° · 🕐 Winkels dicht 13-17u (siësta)
+        </div>
+      </div>
+
+      <div class="panelbox">
+        <h3>🎒 Paklijst</h3>
+        <div class="pack-bar"><i id="packFill"></i></div>
+        <div class="pack" id="pack"></div>
+        <div style="margin-top:10px;color:var(--mut2);font-size:12.5px" id="packMsg">Vink af wat je hebt — wordt bewaard op dit apparaat.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
 <section class="block" id="tips">
-  <div class="section-head">
-    <div class="section-eyebrow">Belangrijk om te weten</div>
-    <h2>Sicilië tips & must-do's</h2>
-    <p class="section-lead">Kleine dingen die het verschil maken tussen "leuke vakantie" en "beste vakantie ooit".</p>
-  </div>
-
-  <div class="tips-grid">
-    <div class="tip">
-      <div class="tip-icon">🍝</div>
-      <div><h4>Eet Siciliaans, geen pizza</h4><p>Pasta alla Norma, arancini, pesce spada (zwaardvis), caponata, cannoli. Pizza is voor Napels.</p></div>
+  <div class="wrap">
+    <div class="head rv">
+      <div class="eyebrow">Belangrijk om te weten</div>
+      <h2>Sicilië tips &amp; must-do's</h2>
+      <p class="lead">Kleine dingen die het verschil maken tussen "leuke vakantie" en "beste vakantie ooit".</p>
     </div>
-    <div class="tip">
-      <div class="tip-icon">☀️</div>
-      <div><h4>Doe het rustig aan tussen 13-17u</h4><p>In juli 35-40°. Middagen = siësta, strand of schaduw. Locals lunchen tot 15u, dan is alles dicht.</p></div>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">🍷</div>
-      <div><h4>Drink locale wijnen</h4><p>Nero d'Avola (rood), Grillo (wit), en Etna-wijnen. Prijs/kwaliteit ongeëvenaard. Marsala als dessert.</p></div>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">💶</div>
-      <div><h4>Cash blijft handig</h4><p>Veel kleine tenten, markten en visserdorpjes willen liever cash. Neem altijd €50-100 mee.</p></div>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">🚗</div>
-      <div><h4>Rijden = avontuur</h4><p>Sicilianen zijn creatief in het verkeer. Rustig blijven, defensief rijden, en accepteer dat scooters overal langskomen.</p></div>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">🥤</div>
-      <div><h4>Granita ≠ Slush Puppie</h4><p>Ontbijt van Sicilianen: <b>granita di mandorla</b> (amandel) of citroen, met een warme brioche erbij. Serieus proberen.</p></div>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">🏊</div>
-      <div><h4>Beste zwemplekken zijn geen stranden</h4><p>De mooiste zwemplekken van Sicilië zijn rotsplateaus (Plemmirio, Vendicari, Isola delle Correnti). Neem waterschoenen.</p></div>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">📸</div>
-      <div><h4>Golden hour is magic</h4><p>Vanaf 19:00 in juli. Ortygia glow, Noto goud, Marzamemi pastel. Plan diners na 20:00 op een plein.</p></div>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">🌋</div>
-      <div><h4>Etna? Alleen als je écht wilt</h4><p>3+ uur rijden vanuit Ortygia. Mooi maar een hele dag kwijt. Alternatief: uitzicht vanaf Taormina op afstand.</p></div>
+    <div class="tips rv">
+      <div class="tip"><div class="ic">🍝</div><div><h4>Eet Siciliaans, geen pizza</h4><p>Pasta alla Norma, arancini, pesce spada, caponata, cannoli. Pizza is voor Napels.</p></div></div>
+      <div class="tip"><div class="ic">☀️</div><div><h4>Rustig aan tussen 13-17u</h4><p>In juli 30-35°. Middagen = siësta, strand of schaduw. Locals lunchen tot 15u.</p></div></div>
+      <div class="tip"><div class="ic">🍷</div><div><h4>Drink locale wijnen</h4><p>Nero d'Avola (rood), Grillo (wit), Etna-wijnen. Prijs/kwaliteit ongeëvenaard.</p></div></div>
+      <div class="tip"><div class="ic">💶</div><div><h4>Cash blijft handig</h4><p>Kleine tenten, markten en visserdorpjes willen liever cash. Neem €50-100 mee.</p></div></div>
+      <div class="tip"><div class="ic">🚗</div><div><h4>Rijden = avontuur</h4><p>Sicilianen zijn creatief in het verkeer. Rustig en defensief rijden, scooters overal.</p></div></div>
+      <div class="tip"><div class="ic">🏊</div><div><h4>Beste zwemplekken zijn rotsen</h4><p>Plemmirio, Vendicari, Isola delle Correnti. Neem <b>waterschoenen</b> mee.</p></div></div>
+      <div class="tip"><div class="ic">📸</div><div><h4>Golden hour is magie</h4><p>Vanaf 19:00 in juli. Ortygia glow, Noto goud, Marzamemi pastel. Diner na 20:00.</p></div></div>
+      <div class="tip"><div class="ic">🥤</div><div><h4>Granita ≠ Slush Puppie</h4><p>Amandel of citroen, met warme brioche erbij. Het échte Siciliaanse ontbijt.</p></div></div>
+      <div class="tip"><div class="ic">🌋</div><div><h4>Etna? Alleen als je écht wilt</h4><p>3+ uur rijden. Mooi, maar een hele dag kwijt. Alternatief: uitzicht vanaf Taormina.</p></div></div>
     </div>
   </div>
 </section>
 
-<div class="footer">
-  Made with ❤️ voor Manja & Menno<br/>
-  <span style="opacity:0.6">Klik op een kaart hierboven om details te bekijken</span><br/><br/>
-  <a href="#stay">🏠 Verblijf</a> · <a href="#ortygia">🏛 Ortygia</a> · <a href="./boot.html">⛵ Boot</a> · <a href="./trips.html">🚗 Trips</a> · <a href="#tips">💡 Tips</a>
-</div>
+<footer>
+  <div class="fnav">
+    <a href="#stay">Verblijf</a>
+    <a href="#ortygia">Ortygia</a>
+    <a href="./kaart.html">Kaart</a>
+    <a href="./boot.html">Bootdag</a>
+    <a href="./trips.html">Dagtrips</a>
+    <a href="#eten">Eten</a>
+    <a href="#handig">Handig</a>
+  </div>
+  Gemaakt met <span class="heart">❤</span> voor <b style="color:#fff">Manja</b> &amp; <b style="color:#fff">Menno</b><br/>
+  <span style="opacity:.6">Ci vediamo in Sicilia · juli 2026</span>
+</footer>
 
+<!-- LIGHTBOX -->
+<div class="lb" id="lb"><span class="x">×</span><img id="lbImg" src="" alt=""></div>
+
+<script>
+/* ---------- NAV ---------- */
+const nav = document.getElementById('nav');
+const links = document.getElementById('links');
+document.getElementById('menuBtn').onclick = () => links.classList.toggle('open');
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 30), {passive:true});
+
+/* ---------- HERO BG (robuuste fallback) ---------- */
+(function(){
+  const el = document.getElementById('heroBg');
+  const urls = [
+    'https://images.unsplash.com/photo-1523365154888-8a758819b722?w=2000&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?w=2000&auto=format&fit=crop'
+  ];
+  let i = 0;
+  const grad = 'linear-gradient(135deg,#0a1830,#0e2a4a 50%,#0a1226)';
+  function paint(u){ el.style.backgroundImage = "linear-gradient(180deg,rgba(7,11,22,.15),rgba(7,11,22,.35)), url('"+u+"')"; }
+  function tryLoad(){
+    if(i>=urls.length){ el.style.backgroundImage = grad; return; }
+    const im = new Image();
+    im.onload = () => paint(urls[i]);
+    im.onerror = () => { i++; tryLoad(); };
+    im.src = urls[i];
+  }
+  el.style.backgroundImage = grad; tryLoad();
+})();
+
+/* ---------- COUNTDOWN naar 5 juli 2026 ---------- */
+(function(){
+  const target = new Date('2026-07-05T15:00:00+02:00').getTime();
+  const dEl=document.getElementById('cd-d'),hEl=document.getElementById('cd-h'),mEl=document.getElementById('cd-m'),sEl=document.getElementById('cd-s');
+  const note=document.getElementById('cdNote');
+  function pad(n){return String(n).padStart(2,'0');}
+  function tick(){
+    const diff = target - Date.now();
+    if(diff <= 0){
+      dEl.textContent='0';hEl.textContent='00';mEl.textContent='00';sEl.textContent='00';
+      note.textContent='We zijn er! 🇮🇹 Buon viaggio!';
+      return;
+    }
+    const d=Math.floor(diff/864e5), h=Math.floor(diff%864e5/36e5), m=Math.floor(diff%36e5/6e4), s=Math.floor(diff%6e4/1e3);
+    dEl.textContent=d; hEl.textContent=pad(h); mEl.textContent=pad(m); sEl.textContent=pad(s);
+  }
+  tick(); setInterval(tick,1000);
+})();
+
+/* ---------- LIVE WEER (Open-Meteo, met fallback) ---------- */
+(function(){
+  const wx = document.getElementById('wx');
+  const wmo = c => {
+    if(c===0) return['☀️','Zonnig'];
+    if(c<=2) return['🌤️','Licht bewolkt'];
+    if(c===3) return['☁️','Bewolkt'];
+    if(c<=48) return['🌫️','Mistig'];
+    if(c<=67) return['🌦️','Motregen'];
+    if(c<=77) return['🌨️','Sneeuw'];
+    if(c<=82) return['🌧️','Buien'];
+    if(c<=99) return['⛈️','Onweer'];
+    return['🌡️','—'];
+  };
+  function render(chips){ wx.innerHTML = chips.map(c=>`<div class="chip"><span class="em">${c.em}</span> ${c.t}</div>`).join(''); }
+  function fallback(){
+    render([
+      {em:'☀️', t:'Syracuse <b>~31°</b> nu'},
+      {em:'🌊', t:'Zee <b>~26°</b>'},
+      {em:'⛵', t:'7 juli: <b>~31°</b> zonnig'}
+    ]);
+  }
+  const f = 'https://api.open-meteo.com/v1/forecast?latitude=37.06&longitude=15.29&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max&timezone=Europe%2FRome&start_date=2026-07-05&end_date=2026-07-07';
+  const m = 'https://marine-api.open-meteo.com/v1/marine?latitude=37.06&longitude=15.29&daily=sea_surface_temperature_max&timezone=Europe%2FRome&start_date=2026-07-05&end_date=2026-07-07';
+  Promise.all([fetch(f).then(r=>r.json()).catch(()=>null), fetch(m).then(r=>r.json()).catch(()=>null)])
+    .then(([w,sea])=>{
+      if(!w || !w.current){ fallback(); return; }
+      const nowT = Math.round(w.current.temperature_2m);
+      const [nEm] = wmo(w.current.weather_code);
+      const chips = [{em:nEm, t:`Syracuse <b>${nowT}°</b> nu`}];
+      // zee-temp (gemiddelde van de tripdagen)
+      if(sea && sea.daily && sea.daily.sea_surface_temperature_max){
+        const vals = sea.daily.sea_surface_temperature_max.filter(v=>v!=null);
+        if(vals.length){ const avg = Math.round(vals.reduce((a,b)=>a+b,0)/vals.length); chips.push({em:'🌊', t:`Zee <b>${avg}°</b>`}); }
+      }
+      // bootdag 7 juli
+      if(w.daily && w.daily.time){
+        const idx = w.daily.time.indexOf('2026-07-07');
+        if(idx>-1){ const [bEm,bTx]=wmo(w.daily.weather_code[idx]); const bMax=Math.round(w.daily.temperature_2m_max[idx]); chips.push({em:bEm, t:`7 juli: <b>${bMax}°</b> ${bTx.toLowerCase()}`}); }
+      }
+      if(chips.length<2) fallback(); else render(chips);
+    }).catch(fallback);
+})();
+
+/* ---------- SCROLL REVEAL ---------- */
+(function(){
+  const io = new IntersectionObserver((es)=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+})();
+
+/* ---------- MAP PREVIEW (statische Leaflet-thumbnail) ---------- */
+(function(){
+  const prev = document.getElementById('mapPrev');
+  const url = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/12/1543/2189';
+  const im = new Image();
+  im.onload = () => prev.style.backgroundImage = `linear-gradient(135deg,rgba(10,26,51,.2),rgba(10,18,38,.5)), url('${url}')`;
+  im.onerror = () => prev.style.backgroundImage = 'linear-gradient(135deg,#0d2244,#0a1226)';
+  im.src = url;
+})();
+
+/* ---------- LIGHTBOX ---------- */
+(function(){
+  const lb=document.getElementById('lb'), lbImg=document.getElementById('lbImg');
+  document.querySelectorAll('[data-lb]').forEach(a=>{
+    a.addEventListener('click', e=>{ e.preventDefault(); lbImg.src=a.getAttribute('data-lb'); lb.classList.add('on'); });
+  });
+  const close=()=>{ lb.classList.remove('on'); lbImg.src=''; };
+  lb.addEventListener('click', close);
+  addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
+})();
+
+/* ---------- PAKLIJST (localStorage) ---------- */
+(function(){
+  const items = [
+    '🩳 Zwemkleding','🕶️ Zonnebril','🧴 Zonnebrand SPF50','🩴 Slippers','👟 Waterschoenen',
+    '🧢 Pet / hoedje','📱 Oplader + powerbank','🔌 Reisstekker (type F/L)','🪪 Paspoort / ID','💳 Pinpas + cash',
+    '🚗 Rijbewijs','🤿 Snorkel + bril','🧻 Handdoek microvezel','💊 Reisapotheek','📸 Camera / GoPro',
+    '🧥 Dun vestje voor \u2019s avonds','🎒 Dagrugzak','🚰 Herbruikbare fles'
+  ];
+  const box=document.getElementById('pack'), fill=document.getElementById('packFill'), msg=document.getElementById('packMsg');
+  let saved={}; try{ saved=JSON.parse(localStorage.getItem('sic-pack')||'{}'); }catch(e){ saved={}; }
+  function upd(){
+    const total=items.length; let done=0;
+    items.forEach((_,i)=>{ if(saved['i'+i]) done++; });
+    fill.style.width = (done/total*100)+'%';
+    msg.textContent = done===total ? '🎉 Alles ingepakt — klaar voor Sicilië!' : `${done} / ${total} ingepakt`;
+  }
+  box.innerHTML = items.map((t,i)=>`<label><input type="checkbox" data-i="${i}" ${saved['i'+i]?'checked':''}><span>${t}</span></label>`).join('');
+  box.querySelectorAll('input').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      saved['i'+inp.dataset.i] = inp.checked;
+      try{ localStorage.setItem('sic-pack', JSON.stringify(saved)); }catch(e){}
+      upd();
+    });
+  });
+  upd();
+})();
+</script>
 </body>
 </html>

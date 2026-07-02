@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Interactieve kaart · Sicilië 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#070b16; --panel:rgba(14,20,36,.82); --panel2:rgba(20,28,48,.9);
+    --line:rgba(126,231,255,.14); --txt:#eaf1ff; --mut:#93a1c4;
+    --cyan:#7ee7ff; --blue:#4a7fff; --gold:#f5b642; --green:#12c99a; --red:#ff6b6b; --purple:#b98cff;
+  }
+  html,body{ height:100%; }
+  body{ font-family:'Inter',system-ui,sans-serif; background:var(--bg); color:var(--txt); overflow:hidden; }
+  #map{ position:absolute; inset:0; z-index:1; background:#04070f; }
+
+  /* Topbar */
+  .topbar{
+    position:absolute; top:0; left:0; right:0; z-index:1000;
+    display:flex; align-items:center; gap:14px; padding:12px 16px;
+    background:linear-gradient(180deg, rgba(7,11,22,.92), rgba(7,11,22,.55) 70%, transparent);
+    backdrop-filter:blur(4px);
+  }
+  .back{
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    color:var(--txt); font-weight:600; font-size:14px; white-space:nowrap;
+    background:rgba(126,231,255,.1); border:1px solid var(--line);
+    padding:9px 14px; border-radius:12px; transition:.2s;
+  }
+  .back:hover{ background:rgba(126,231,255,.2); transform:translateX(-2px); }
+  .ttl{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; letter-spacing:.2px; }
+  .ttl small{ display:block; font-family:'Inter'; font-weight:500; font-size:11px; color:var(--mut); letter-spacing:.5px; text-transform:uppercase; }
+  .spacer{ flex:1; }
+  .listBtn{
+    display:none; align-items:center; gap:7px; cursor:pointer;
+    background:var(--cyan); color:#04121a; font-weight:700; font-size:13px;
+    border:none; padding:10px 14px; border-radius:12px;
+  }
+
+  /* Filter chips */
+  .filters{
+    position:absolute; top:64px; left:0; right:0; z-index:999;
+    display:flex; gap:8px; padding:6px 16px 14px; overflow-x:auto;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .filters::-webkit-scrollbar{ display:none; }
+  .chip{
+    flex:0 0 auto; cursor:pointer; user-select:none;
+    display:inline-flex; align-items:center; gap:7px;
+    background:var(--panel); border:1px solid var(--line);
+    color:var(--txt); font-size:13px; font-weight:600;
+    padding:9px 14px; border-radius:100px; backdrop-filter:blur(10px);
+    transition:.18s; white-space:nowrap;
+  }
+  .chip:hover{ border-color:rgba(126,231,255,.4); transform:translateY(-1px); }
+  .chip .dot{ width:10px; height:10px; border-radius:50%; }
+  .chip.active{ background:var(--cyan); color:#04121a; border-color:var(--cyan); }
+  .chip.active .dot{ outline:2px solid rgba(0,0,0,.15); }
+
+  /* Side / bottom list */
+  .panel{
+    position:absolute; z-index:998; top:118px; left:16px; width:360px; max-width:calc(100vw - 32px);
+    bottom:76px; display:flex; flex-direction:column; gap:10px;
+    background:var(--panel); border:1px solid var(--line); border-radius:20px;
+    backdrop-filter:blur(18px); padding:14px; overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.5);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), opacity .3s;
+  }
+  .panel h3{ font-family:'Fraunces'; font-weight:600; font-size:15px; padding:2px 4px; display:flex; align-items:center; gap:8px; }
+  .panel h3 .count{ font-family:'Inter'; font-size:11px; color:var(--mut); font-weight:600; }
+  .cards{ overflow-y:auto; display:flex; flex-direction:column; gap:9px; padding-right:4px; scrollbar-width:thin; }
+  .cards::-webkit-scrollbar{ width:5px; } .cards::-webkit-scrollbar-thumb{ background:rgba(126,231,255,.25); border-radius:10px; }
+  .card{
+    display:flex; gap:11px; cursor:pointer; padding:9px; border-radius:14px;
+    background:var(--panel2); border:1px solid transparent; transition:.18s;
+  }
+  .card:hover{ border-color:rgba(126,231,255,.35); transform:translateX(3px); }
+  .card.active{ border-color:var(--cyan); background:rgba(126,231,255,.09); }
+  .card .thumb{ flex:0 0 60px; width:60px; height:60px; border-radius:11px; object-fit:cover; background:#0c1424; }
+  .card .b{ min-width:0; flex:1; }
+  .card .cn{ font-weight:700; font-size:14px; display:flex; align-items:center; gap:6px; }
+  .card .cm{ font-size:11.5px; color:var(--mut); margin-top:2px; }
+  .card .cd{ font-size:11.5px; color:#aab6d6; margin-top:5px; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .tagpill{ font-size:10px; font-weight:700; padding:2px 8px; border-radius:100px; }
+
+  /* Floating buttons */
+  .fabs{ position:absolute; right:16px; bottom:20px; z-index:999; display:flex; flex-direction:column; gap:10px; }
+  .fab{
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer; border:none;
+    background:var(--panel2); color:var(--txt); font-weight:700; font-size:13px;
+    padding:12px 15px; border-radius:14px; border:1px solid var(--line);
+    backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,.45); transition:.18s;
+  }
+  .fab:hover{ transform:translateY(-2px); border-color:rgba(126,231,255,.4); }
+  .fab.primary{ background:linear-gradient(135deg,var(--cyan),var(--blue)); color:#04121a; }
+
+  /* Leaflet popup */
+  .leaflet-popup-content-wrapper{ background:#0e1424; color:var(--txt); border-radius:16px; border:1px solid var(--line); box-shadow:0 20px 50px rgba(0,0,0,.6); }
+  .leaflet-popup-tip{ background:#0e1424; }
+  .leaflet-popup-content{ margin:0; width:250px !important; }
+  .pop img{ width:100%; height:130px; object-fit:cover; border-radius:15px 15px 0 0; display:block; }
+  .pop .pb{ padding:11px 13px 13px; }
+  .pop .pt{ font-family:'Fraunces'; font-weight:600; font-size:16px; }
+  .pop .pm{ font-size:11.5px; color:var(--mut); margin:5px 0 7px; display:flex; gap:10px; flex-wrap:wrap; }
+  .pop .pd{ font-size:12px; color:#c2cceb; line-height:1.5; }
+  .pop .pt-tips{ margin-top:8px; padding-top:8px; border-top:1px solid var(--line); font-size:11px; color:#9fb0d6; }
+  .marker-num{ font-family:'Inter'; }
+
+  /* Custom home marker pulse */
+  .home-pulse::before{
+    content:''; position:absolute; inset:-8px; border-radius:50%;
+    background:rgba(126,231,255,.35); animation:pulse 2.2s ease-out infinite;
+  }
+  @keyframes pulse{ 0%{ transform:scale(.6); opacity:.9; } 100%{ transform:scale(2.4); opacity:0; } }
+
+  .legend-note{ position:absolute; left:16px; bottom:20px; z-index:997; font-size:11px; color:var(--mut);
+    background:var(--panel); border:1px solid var(--line); padding:8px 12px; border-radius:12px; backdrop-filter:blur(10px); max-width:230px; line-height:1.5; }
+
+  @media (max-width:820px){
+    .listBtn{ display:inline-flex; }
+    .ttl small{ display:none; }
+    .panel{ left:0; right:0; width:auto; max-width:none; top:auto; bottom:0; height:56vh;
+      border-radius:22px 22px 0 0; transform:translateY(105%); }
+    .panel.open{ transform:translateY(0); }
+    .legend-note{ display:none; }
+    .fabs{ bottom:16px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<div class="topbar">
+  <a href="./" class="back">← Overzicht</a>
+  <div class="ttl">Interactieve kaart<small>Appartement · Bootroute · Dagtrips</small></div>
+  <div class="spacer"></div>
+  <button class="listBtn" id="listBtn">☰ Lijst</button>
+</div>
+
+<div class="filters" id="filters"></div>
+
+<div class="panel" id="panel">
+  <h3>📍 Plekken <span class="count" id="count"></span></h3>
+  <div class="cards" id="cards"></div>
+</div>
+
+<div class="fabs">
+  <button class="fab primary" id="fitBtn">🧭 Alles tonen</button>
+  <button class="fab" id="homeBtn">🏠 Ons huis</button>
+</div>
+
+<div class="legend-note">Tip: klik een marker of kaartje voor foto, zwemtips & rijtijd. Filter bovenaan op type.</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ---------- DATA ---------- */
+const HOME = {
+  lat:37.0633, lng:15.2928,
+  name:'Ons appartement',
+  sub:'Ortigia Sea View · 5–7 juli',
+  img:'img/slaapkamer-fresco.png',
+  desc:'220m² in een 19e-eeuws pand aan het plein op Ortygia, zeezicht over de marina & Grand Harbour. 3 slaapkamers, fresco-plafond, ⭐ 4.99.',
+  tips:['Aperitivo Piazza Duomo (5 min)', 'Zwemmen Cala Rossa / Forte Vigliena', 'Markt Ortygia elke ochtend']
+};
+
+const BOAT_STOPS = [
+  { n:1, name:'Vertrek boothuur',            lat:37.0553, lng:15.2674, d:'Start · ~10:00' },
+  { n:2, name:'Ortygia · Castello Maniace',  lat:37.0505, lng:15.2935, d:'Langs de vestingmuren varen' },
+  { n:3, name:'Plemmirio · Punta della Mola',lat:37.0170, lng:15.3255, d:'Snorkelspot, kristalhelder' },
+  { n:4, name:'Grotta Bagno della Regina',   lat:37.0110, lng:15.3280, d:'Zeegrot — met het bootje invaren' },
+  { n:5, name:'Ognina · lunch',              lat:36.9860, lng:15.3005, d:'Ankeren, zwemmen & lunch' },
+  { n:6, name:'Fontane Bianche',             lat:36.9530, lng:15.2650, d:'Turquoise water, verste punt' },
+  { n:7, name:'Cala Massolivieri',           lat:37.0035, lng:15.3100, d:'Laatste duik op de terugweg' },
+  { n:8, name:'Terug boothuur',              lat:37.0553, lng:15.2674, d:'Vóór 17:00 — dan komt de wind' },
+];
+const BOAT_ROUTE = [
+  [37.0553,15.2674],[37.0500,15.2740],[37.0430,15.2820],[37.0400,15.2920],[37.0420,15.3020],
+  [37.0400,15.3120],[37.0330,15.3200],[37.0250,15.3270],[37.0170,15.3300],[37.0130,15.3320],
+  [37.0060,15.3260],[37.0000,15.3180],[36.9930,15.3100],[36.9880,15.3050],[36.9860,15.3005],
+  [36.9800,15.2950],[36.9700,15.2830],[36.9600,15.2730],[36.9530,15.2650],[36.9600,15.2730],
+  [36.9750,15.2900],[36.9880,15.3050],[37.0000,15.3180],[37.0035,15.3100],[37.0100,15.3220],
+  [37.0200,15.3290],[37.0330,15.3230],[37.0400,15.3140],[37.0420,15.3030],[37.0400,15.2930],
+  [37.0430,15.2820],[37.0500,15.2740],[37.0553,15.2674]
+];
+
+const TRIPS = [
+  { id:'plemmirio', name:'Plemmirio kust', cat:'strand', lat:37.0128, lng:15.3086, drive:'20 min auto', time:'Halve dag',
+    desc:'Rotskust-natuurpark. Massolivieri baai voor zwemmen, Punta della Mola voor snorkelen. Kristalhelder, veel vis. Neem waterschoentjes.',
+    img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop',
+    tips:['Snorkelset mee','Massolivieri = makkelijkste toegang','Sunset bij vuurtoren Capo Murro'] },
+  { id:'fontane', name:'Fontane Bianche', cat:'strand', lat:36.9350, lng:15.1839, drive:'25 min auto', time:'Halve dag',
+    desc:'Karibisch turquoise water, wit zand — dichtstbijzijnde échte zandstrand. Beach clubs met ligbedden. Kan druk in juli.',
+    img:'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&auto=format&fit=crop',
+    tips:['Ga vóór 10u of laat','Lido Azzurro voor ligbedden','Combi met lunch in Avola'] },
+  { id:'vendicari', name:'Riserva Vendicari', cat:'strand', lat:36.8083, lng:15.1050, drive:'55 min auto', time:'Halve/hele dag',
+    desc:'Natuurreservaat met wilde stranden en flamingo\u2019s. Calamosche is een van de mooiste baaien van Sicilië — 15 min lopen, dan turquoise tussen de rotsen.',
+    img:'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&auto=format&fit=crop',
+    tips:['Calamosche: lopen vanaf parking','San Lorenzo = makkelijker','Water mee, geen kiosk'] },
+  { id:'correnti', name:'Isola delle Correnti', cat:'strand', lat:36.6469, lng:15.0839, drive:'1u5 auto', time:'Halve dag',
+    desc:'Zuidelijkste punt van Sicilië — waar de Ionische en Middellandse Zee elkaar raken. Wild & spectaculair. Bij eb loop je naar het eilandje.',
+    img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop',
+    tips:['Check het getij','Kitesurf-spot','Combi met Marzamemi diner'] },
+  { id:'noto', name:'Noto', cat:'stadje', lat:36.8908, lng:15.0700, drive:'40 min auto', time:'Halve dag',
+    desc:'Barok pareltje, UNESCO. Honingkleurige gevels, indrukwekkende Duomo. Magisch in de late namiddagzon. Beste gelato bij Caffè Sicilia.',
+    img:'https://images.unsplash.com/photo-1602928321679-560bb453f190?w=600&auto=format&fit=crop',
+    tips:['Caffè Sicilia — granita di mandorla','Dak Chiesa di San Carlo bij sunset','Combi met Vendicari'] },
+  { id:'marzamemi', name:'Marzamemi', cat:'stadje', lat:36.7422, lng:15.1136, drive:'55 min auto', time:'Avond',
+    desc:'Oud vissersdorpje met tonnara. Piazza Regina Margherita is magisch bij zonsondergang. Perfect voor diner: verse vis, pasta con le sarde.',
+    img:'https://images.unsplash.com/photo-1583224964978-2257b960c3d3?w=600&auto=format&fit=crop',
+    tips:['La Cialoma','Reserveer in juli','Combi met Portopalo'] },
+  { id:'brucoli', name:'Brucoli', cat:'stadje', lat:37.2870, lng:15.1858, drive:'35 min auto', time:'Avond',
+    desc:'Piepklein vissersdorpje ten noorden van Syracuse. Kleurige bootjes, fjord-achtige inham, 15e-eeuws kasteeltje. Nauwelijks toeristen. Diner aan het water = magisch.',
+    img:'https://images.unsplash.com/photo-1583224964978-2257b960c3d3?w=600&auto=format&fit=crop',
+    tips:['Ristorante Duomo of Al Castello','Sunset aan de haven','Combi met Agnone strand'] },
+  { id:'palazzolo', name:'Palazzolo Acreide', cat:'stadje', lat:37.0616, lng:14.9022, drive:'50 min auto', time:'Halve dag',
+    desc:'Onderschat barok bergdorp. Rustiger en authentieker dan Noto/Modica. Grieks amfitheater (Akrai) bovenop. Perfect om toeristen te ontvluchten.',
+    img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&auto=format&fit=crop',
+    tips:['Andrea Restaurant','Griekse ruïnes gratis','Combi met Cavagrande'] },
+  { id:'ferla', name:'Ferla & Pantalica', cat:'stadje', lat:37.1233, lng:14.9394, drive:'50 min auto', time:'Halve dag',
+    desc:'Slaperig barok bergdorp aan de rand van de Pantalica-kloof (UNESCO), zonder toeristen. Honingkleurige kerkjes, echt authentiek Sicilië.',
+    img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&auto=format&fit=crop',
+    tips:['Chiesa di San Sebastiano','Combi met Pantalica hike','Trattoria Al Vecchio Camino'] },
+  { id:'portopalo', name:'Portopalo di Capo Passero', cat:'stadje', lat:36.6822, lng:15.1370, drive:'1u auto', time:'Halve dag',
+    desc:'Vissersdorpje op de zuidpunt. Kleurige bootjes, verse tonijn, zicht op Isola di Capo Passero. Combi met Marzamemi diner is killer.',
+    img:'https://images.unsplash.com/photo-1583224964978-2257b960c3d3?w=600&auto=format&fit=crop',
+    tips:['Vismarkt in de ochtend','Spiaggia Carratois ernaast','Sunset bij Capo Passero fort'] },
+  { id:'cavagrande', name:'Cavagrande del Cassibile', cat:'berg', lat:36.9433, lng:15.0733, drive:'45 min auto', time:'Halve dag',
+    desc:'Kloof met natuurlijke zwembaden (laghetti). Afdaling ~1u stevig, terug 1u30 zweten. Beloning: koele bergrivier-zwembaden. Voor fitte types.',
+    img:'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&auto=format&fit=crop',
+    tips:['Stevige schoenen verplicht','Ga vroeg — dicht bij hitte','2L water pp mee'] },
+  { id:'sortino', name:'Sortino & Pantalica', cat:'berg', lat:37.1583, lng:15.0286, drive:'45 min auto', time:'Halve/hele dag',
+    desc:'Bergdorp boven de Pantalica-kloof — 5.000 rotsgraven en natuurlijke zwembaden in de rivier. Combineer dorp (honing, ricotta) met een hike naar de laghetti.',
+    img:'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&auto=format&fit=crop',
+    tips:['Zwemmen in de Anapo-rivier','Honing kopen — Sortino beroemd','Stevige schoenen'] },
+  { id:'buscemi', name:'Buscemi', cat:'stadje', lat:37.0872, lng:14.8836, drive:'55 min auto', time:'Halve dag',
+    desc:'Levend openluchtmuseum-dorp: oude ambachten (smid, olijfmolen) nog intact. Super charmant, weinig toeristen, mooi uitzicht over de vallei.',
+    img:'https://images.unsplash.com/photo-1568051243851-f9b136146e97?w=600&auto=format&fit=crop',
+    tips:['I Luoghi del Lavoro Contadino','Combi met Palazzolo','Niet op maandag (dicht)'] },
+];
+
+const CATS = {
+  home:  { label:'Appartement', color:'#7ee7ff', emoji:'🏠' },
+  boot:  { label:'Bootdag',     color:'#38bdf8', emoji:'⛵' },
+  stadje:{ label:'Stadjes',     color:'#f5b642', emoji:'🏛' },
+  strand:{ label:'Stranden',    color:'#12c99a', emoji:'🏖' },
+  berg:  { label:'Natuur',      color:'#ff6b6b', emoji:'⛰' },
+};
+
+/* ---------- MAP ---------- */
+const map = L.map('map', { zoomControl:true, attributionControl:false }).setView([36.98,15.15], 10);
+L.control.attribution({ prefix:false, position:'bottomright' }).addAttribution('© Esri · Leaflet').addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom:19 }).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', { maxZoom:19, opacity:.9 }).addTo(map);
+
+/* Layer groups */
+const layers = {
+  home:   L.layerGroup().addTo(map),
+  boot:   L.layerGroup().addTo(map),
+  stadje: L.layerGroup().addTo(map),
+  strand: L.layerGroup().addTo(map),
+  berg:   L.layerGroup().addTo(map),
+};
+const markerIndex = {};
+
+/* Boat route line (glow + main) */
+L.polyline(BOAT_ROUTE, { color:'#0a3a5c', weight:9, opacity:.55, lineJoin:'round' }).addTo(layers.boot);
+L.polyline(BOAT_ROUTE, { color:'#38bdf8', weight:3.5, opacity:.95, dashArray:'2 9', lineJoin:'round' }).addTo(layers.boot);
+
+/* Icons */
+function pinIcon(color, label, big){
+  const s = big?38:30;
+  return L.divIcon({
+    className:'', iconSize:[s,s], iconAnchor:[s/2,s],
+    html:`<div style="position:relative;width:${s}px;height:${s}px;">
+      <div style="position:absolute;left:50%;top:0;transform:translateX(-50%) rotate(-45deg);
+        width:${s}px;height:${s}px;background:${color};border:3px solid #fff;border-radius:50% 50% 50% 0;
+        box-shadow:0 6px 16px rgba(0,0,0,.5);"></div>
+      <div style="position:absolute;left:0;top:${big?9:7}px;width:${s}px;text-align:center;color:#04121a;
+        font-weight:800;font-size:${big?15:13}px;" class="marker-num">${label}</div>
+    </div>`
+  });
+}
+function homeIcon(){
+  return L.divIcon({ className:'', iconSize:[46,46], iconAnchor:[23,23],
+    html:`<div class="home-pulse" style="position:relative;width:46px;height:46px;">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,#7ee7ff,#4a7fff);border:3px solid #fff;
+        border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;
+        box-shadow:0 8px 22px rgba(74,127,255,.6);">🏠</div></div>` });
+}
+
+function popupHTML(o, meta){
+  const tips = o.tips ? `<div class="pt-tips"><b>Tips:</b> ${o.tips.join(' • ')}</div>` : '';
+  return `<div class="pop">
+    <img src="${o.img}" onerror="this.style.display='none'"/>
+    <div class="pb">
+      <div class="pt">${o.name}</div>
+      <div class="pm">${meta}</div>
+      <div class="pd">${o.desc}</div>${tips}
+    </div></div>`;
+}
+
+/* Home marker */
+const homeMarker = L.marker([HOME.lat,HOME.lng], { icon:homeIcon(), zIndexOffset:1000 })
+  .bindPopup(popupHTML(HOME, '⭐ 4.99 · Ortygia'), { maxWidth:260 })
+  .addTo(layers.home);
+markerIndex['home'] = homeMarker;
+
+/* Boat stop markers */
+BOAT_STOPS.forEach(s=>{
+  if(s.n===8) return; // same spot as start
+  const m = L.marker([s.lat,s.lng], { icon:pinIcon(CATS.boot.color, s.n) })
+    .bindPopup(`<div class="pop"><div class="pb"><div class="pt">${s.n}. ${s.name}</div>
+      <div class="pm">⛵ Bootdag 7 juli</div><div class="pd">${s.d||''}</div></div></div>`, { maxWidth:250 });
+  m.addTo(layers.boot);
+  markerIndex['boot-'+s.n] = m;
+});
+
+/* Trip markers */
+TRIPS.forEach(t=>{
+  const c = CATS[t.cat];
+  const m = L.marker([t.lat,t.lng], { icon:pinIcon(c.color, c.emoji) })
+    .bindPopup(popupHTML(t, `🚗 ${t.drive} · ⏱ ${t.time}`), { maxWidth:260 });
+  m.addTo(layers[t.cat]);
+  markerIndex[t.id] = m;
+});
+
+/* ---------- FILTERS ---------- */
+const order = ['home','boot','stadje','strand','berg'];
+let active = 'all';
+const filtersEl = document.getElementById('filters');
+
+function makeChip(key,label,color){
+  const chip = document.createElement('div');
+  chip.className = 'chip' + (key==='all'?' active':'');
+  chip.innerHTML = (color?`<span class="dot" style="background:${color}"></span>`:'') + label;
+  chip.onclick = ()=>{ setFilter(key); };
+  filtersEl.appendChild(chip);
+  return chip;
+}
+makeChip('all','✦ Alles', null);
+order.forEach(k=> makeChip(k, CATS[k].emoji+' '+CATS[k].label, CATS[k].color));
+
+function setFilter(key){
+  active = key;
+  [...filtersEl.children].forEach(c=>c.classList.remove('active'));
+  const idx = key==='all'?0: order.indexOf(key)+1;
+  filtersEl.children[idx]?.classList.add('active');
+  // toggle layers
+  order.forEach(k=>{
+    const show = (key==='all'||key===k);
+    if(show){ if(!map.hasLayer(layers[k])) layers[k].addTo(map); }
+    else { if(map.hasLayer(layers[k])) map.removeLayer(layers[k]); }
+  });
+  renderCards();
+}
+
+/* ---------- CARDS ---------- */
+const cardsEl = document.getElementById('cards');
+const countEl = document.getElementById('count');
+
+function listData(){
+  const rows = [];
+  if(active==='all'||active==='home')
+    rows.push({ key:'home', cat:'home', name:HOME.name, meta:HOME.sub, desc:HOME.desc, img:HOME.img });
+  if(active==='all'||active==='boot')
+    BOAT_STOPS.filter(s=>s.n!==8).forEach(s=> rows.push({ key:'boot-'+s.n, cat:'boot', name:s.n+'. '+s.name, meta:'⛵ Bootdag', desc:s.d||'', img:null }));
+  TRIPS.forEach(t=>{ if(active==='all'||active===t.cat) rows.push({ key:t.id, cat:t.cat, name:t.name, meta:'🚗 '+t.drive+' · ⏱ '+t.time, desc:t.desc, img:t.img }); });
+  return rows;
+}
+function renderCards(){
+  const rows = listData();
+  countEl.textContent = rows.length + ' plekken';
+  cardsEl.innerHTML='';
+  rows.forEach(r=>{
+    const c = CATS[r.cat];
+    const el = document.createElement('div');
+    el.className='card';
+    el.innerHTML = `
+      ${r.img?`<img class="thumb" src="${r.img}" onerror="this.style.visibility='hidden'"/>`
+             :`<div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:24px;background:${c.color}22">${c.emoji}</div>`}
+      <div class="b">
+        <div class="cn">${r.name} <span class="tagpill" style="background:${c.color}22;color:${c.color}">${c.label}</span></div>
+        <div class="cm">${r.meta}</div>
+        <div class="cd">${r.desc}</div>
+      </div>`;
+    el.onclick = ()=>{
+      document.querySelectorAll('.card').forEach(x=>x.classList.remove('active'));
+      el.classList.add('active');
+      const mk = markerIndex[r.key];
+      if(mk){
+        const ll = mk.getLatLng();
+        map.flyTo([ll.lat, ll.lng], r.cat==='home'?15:13, { duration:1.1 });
+        setTimeout(()=>mk.openPopup(), 700);
+      }
+      if(window.innerWidth<=820) panel.classList.remove('open');
+    };
+    cardsEl.appendChild(el);
+  });
+}
+
+/* ---------- CONTROLS ---------- */
+const panel = document.getElementById('panel');
+document.getElementById('listBtn').onclick = ()=> panel.classList.toggle('open');
+
+const allBounds = L.latLngBounds([[HOME.lat,HOME.lng], ...BOAT_ROUTE, ...TRIPS.map(t=>[t.lat,t.lng])]);
+document.getElementById('fitBtn').onclick = ()=> map.flyToBounds(allBounds, { padding:[60,60], duration:1.1 });
+document.getElementById('homeBtn').onclick = ()=>{ map.flyTo([HOME.lat,HOME.lng],15,{duration:1.1}); setTimeout(()=>homeMarker.openPopup(),700); };
+
+/* Init */
+renderCards();
+setTimeout(()=> map.flyToBounds(allBounds, { padding:[60,60], duration:1.4 }), 350);
+</script>
+</body>
+</html>
