@@ -1,0 +1,107 @@
+[
+  {
+    "key": "ortygia-duomo",
+    "file": "ortygia-duomo.jpg",
+    "commons_file": "Duomo_di_Siracusa.jpg",
+    "src_page": "https://it.wikipedia.org/wiki/Duomo_di_Siracusa",
+    "method": "wiki:it:Cattedrale di Siracusa"
+  },
+  {
+    "key": "vendicari",
+    "file": "vendicari.jpg",
+    "commons_file": "Vendicari.JPG",
+    "src_page": "https://it.wikipedia.org/wiki/Riserva_naturale_orientata_Oasi_Faunistica_di_Vendicari",
+    "method": "wiki:it:Riserva naturale orientata Oasi Faunistica di Vendicari"
+  },
+  {
+    "key": "marzamemi",
+    "file": "marzamemi.jpg",
+    "commons_file": "Marzamemi_1496.JPG",
+    "src_page": "https://en.wikipedia.org/wiki/Marzamemi",
+    "method": "wiki:en:Marzamemi"
+  },
+  {
+    "key": "brucoli",
+    "file": "brucoli.jpg",
+    "commons_file": "Brucoli_Village.jpg",
+    "src_page": "https://it.wikipedia.org/wiki/Brucoli",
+    "method": "wiki:it:Brucoli"
+  },
+  {
+    "key": "ortygia-aero",
+    "file": "hero-ortygia.jpg",
+    "commons_file": "Ortigia_dall'alto.jpg",
+    "src_page": "https://en.wikipedia.org/wiki/Ortygia",
+    "method": "wiki:en:Ortygia"
+  },
+  {
+    "key": "noto",
+    "file": "noto.jpg",
+    "commons_file": "Noto_BW_2025-04-26_10-12-43_(cropped).jpg",
+    "src_page": "https://en.wikipedia.org/wiki/Noto",
+    "method": "wiki:en:Noto"
+  },
+  {
+    "key": "correnti",
+    "file": "correnti.jpg",
+    "commons_file": "Isola_delle_Correnti_-_Sicily.jpg",
+    "src_page": "https://it.wikipedia.org/wiki/Isola_delle_Correnti",
+    "method": "wiki:it:Isola delle Correnti"
+  },
+  {
+    "key": "fontane-bianche",
+    "file": "fontane-bianche.jpg",
+    "commons_file": "Spiaggia_di_Fontane_Bianche_02.jpg",
+    "src_page": "https://it.wikipedia.org/wiki/Fontane_Bianche",
+    "method": "wiki:it:Fontane Bianche"
+  },
+  {
+    "key": "palazzolo",
+    "file": "palazzolo.jpg",
+    "commons_file": "Palazzolo_Acreide_overview_AvL.jpg",
+    "src_page": "https://en.wikipedia.org/wiki/Palazzolo_Acreide",
+    "method": "wiki:en:Palazzolo Acreide"
+  },
+  {
+    "key": "cavagrande",
+    "file": "cavagrande.jpg",
+    "commons_file": "Panorama_di_Cavagrande.jpg",
+    "src_page": "https://it.wikipedia.org/wiki/Riserva_naturale_orientata_Cavagrande_del_Cassibile",
+    "method": "wiki:it:Cavagrande del Cassibile"
+  },
+  {
+    "key": "ferla",
+    "file": "ferla.jpg",
+    "commons_file": "Ferla_da_Cassaro.jpg",
+    "src_page": "https://it.wikipedia.org/wiki/Ferla",
+    "method": "wiki:it:Ferla"
+  },
+  {
+    "key": "buscemi",
+    "file": "buscemi.jpg",
+    "commons_file": "Buscemi,_Syracuse,_Italy.jpg",
+    "src_page": "https://it.wikipedia.org/wiki/Buscemi",
+    "method": "wiki:it:Buscemi"
+  },
+  {
+    "key": "portopalo",
+    "file": "portopalo.jpg",
+    "commons_file": "Portopalo dal mare.jpg",
+    "src_page": "https://commons.wikimedia.org/wiki/File:Portopalo_dal_mare.jpg",
+    "method": "commons:Portopalo di Capo Passero"
+  },
+  {
+    "key": "pantalica",
+    "file": "pantalica.jpg",
+    "commons_file": "Nekropolis_von_Pantalica.jpg",
+    "src_page": "https://en.wikipedia.org/wiki/Necropolis_of_Pantalica",
+    "method": "wiki:en:Pantalica"
+  },
+  {
+    "key": "plemmirio",
+    "file": "plemmirio.jpg",
+    "commons_file": "Varco 27, Plemmirio 3.jpg",
+    "src_page": "https://commons.wikimedia.org/wiki/File:Varco_27,_Plemmirio_3.jpg",
+    "method": "commons:Plemmirio"
+  }
+]
