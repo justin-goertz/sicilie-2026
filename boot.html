@@ -230,50 +230,28 @@
   // Actual stops (numbered markers)
   const stops = [
     { n:1, name:"Vertrek boothuur",              lat:37.0553, lng:15.2674, color:"#1f6feb" },
-    { n:2, name:"Ortygia (Castello Maniace)",    lat:37.0505, lng:15.2935, color:"#8250df" },
-    { n:3, name:"Plemmirio — Punta della Mola",  lat:37.0170, lng:15.3255, color:"#2ea043" },
-    { n:4, name:"Grotta Bagno della Regina",     lat:37.0110, lng:15.3280, color:"#8250df" },
-    { n:5, name:"Ognina (lunch)",                lat:36.9860, lng:15.3005, color:"#d29922" },
-    { n:6, name:"Fontane Bianche",               lat:36.9530, lng:15.2650, color:"#2ea043" },
-    { n:7, name:"Cala Massolivieri",             lat:37.0035, lng:15.3100, color:"#d29922" },
+    { n:2, name:"Rondje Ortygia vanaf zee",      lat:37.0505, lng:15.2935, color:"#8250df" },
+    { n:3, name:"Plemmirio — Punta della Mola",  lat:37.0175, lng:15.3290, color:"#2ea043" },
+    { n:4, name:"Grotta Bagno della Regina",     lat:37.0115, lng:15.3310, color:"#8250df" },
+    { n:5, name:"Ognina (lunch)",                lat:36.9865, lng:15.3025, color:"#d29922" },
+    { n:6, name:"Fontane Bianche",               lat:36.9555, lng:15.2665, color:"#2ea043" },
+    { n:7, name:"Cala Massolivieri",             lat:37.0230, lng:15.3255, color:"#d29922" },
     { n:8, name:"Terug boothuur",                lat:37.0553, lng:15.2674, color:"#1f6feb" },
   ];
 
-  // SEA route - offshore, south via Ortygia, Plemmirio, Ognina, Fontane Bianche, back
+  // SEA route - kusthuggend: Ortygia-rondje aan de start, dan Plemmirio-kliffen,
+  // rond Capo Murro di Porco, Ognina + Fontane Bianche, terug via Massolivieri
   const seaRoute = [
-    [37.0553, 15.2674],  // start boothuur
-    [37.0500, 15.2740],
-    [37.0430, 15.2820],
-    [37.0400, 15.2920],
-    [37.0420, 15.3020],  // net zuid Castello Maniace (offshore)
-    [37.0400, 15.3120],
-    [37.0330, 15.3200],
-    [37.0250, 15.3270],
-    [37.0170, 15.3300],  // Punta della Mola offshore
-    [37.0130, 15.3320],  // grotta offshore
-    [37.0060, 15.3260],  // rond zuidpunt Plemmirio
-    [37.0000, 15.3180],
-    [36.9930, 15.3100],  // langs kust naar Ognina
-    [36.9880, 15.3050],
-    [36.9860, 15.3005],  // Ognina
-    [36.9800, 15.2950],
-    [36.9700, 15.2830],  // richting Fontane Bianche
-    [36.9600, 15.2730],
-    [36.9530, 15.2650],  // Fontane Bianche offshore
-    [36.9600, 15.2730],  // terug noord
-    [36.9750, 15.2900],
-    [36.9880, 15.3050],
-    [37.0000, 15.3180],
-    [37.0035, 15.3100],  // Massolivieri
-    [37.0100, 15.3220],
-    [37.0200, 15.3290],
-    [37.0330, 15.3230],
-    [37.0400, 15.3140],
-    [37.0420, 15.3030],
-    [37.0400, 15.2930],
-    [37.0430, 15.2820],
-    [37.0500, 15.2740],
-    [37.0553, 15.2674],  // terug boothuur
+    [37.0553,15.2674],[37.0520,15.2760],[37.0490,15.2870],[37.0470,15.2955],[37.0500,15.2935],
+    [37.0545,15.2985],[37.0595,15.3000],[37.0635,15.2990],[37.0655,15.2955],[37.0620,15.2955],
+    [37.0560,15.2950],[37.0510,15.2930],[37.0470,15.2965],[37.0440,15.3060],[37.0410,15.3150],
+    [37.0360,15.3220],[37.0300,15.3270],[37.0240,15.3300],[37.0175,15.3315],[37.0135,15.3325],
+    [37.0110,15.3330],[37.0070,15.3375],[37.0040,15.3400],[37.0005,15.3380],[36.9960,15.3300],
+    [36.9910,15.3170],[36.9875,15.3060],[36.9865,15.3020],[36.9800,15.2910],[36.9720,15.2800],
+    [36.9640,15.2710],[36.9555,15.2660],[36.9660,15.2740],[36.9790,15.2910],[36.9880,15.3060],
+    [36.9970,15.3220],[37.0030,15.3340],[37.0055,15.3395],[37.0100,15.3350],[37.0150,15.3310],
+    [37.0230,15.3270],[37.0310,15.3220],[37.0380,15.3140],[37.0430,15.3040],[37.0455,15.2985],
+    [37.0490,15.2880],[37.0520,15.2760],[37.0553,15.2674],
   ];
 
   const map = L.map('map', { zoomControl: true }).setView([37.03, 15.31], 13);
