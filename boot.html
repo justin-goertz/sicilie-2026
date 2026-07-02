@@ -48,6 +48,13 @@
   .stat .label { font-size: 10px; color:#8b949e; text-transform: uppercase; letter-spacing:0.5px; }
   .stat .value { font-size: 16px; font-weight:600; color:#e6edf3; margin-top:2px; }
 
+  .boat-gallery{display:grid;grid-template-columns:1.6fr 1fr;grid-template-rows:1fr 1fr;gap:8px;margin:16px 0 6px;height:200px}
+  .boat-gallery a{border-radius:10px;overflow:hidden;border:1px solid #30363d;background:#0d1117 center/cover;transition:.25s}
+  .boat-gallery a:first-child{grid-row:1/3}
+  .boat-gallery a:hover{border-color:#58a6ff;filter:brightness(1.08)}
+  .boat-gallery img{width:100%;height:100%;object-fit:cover;display:block}
+  .boat-cap{font-size:12.5px;color:#8b949e;margin:0 0 20px}
+
   h2 {
     font-size: 11px; text-transform: uppercase; color:#8b949e;
     margin: 24px 0 12px; letter-spacing: 1px; font-weight: 600;
@@ -114,13 +121,20 @@
   <a href="./" style="display:inline-flex;align-items:center;gap:6px;color:#8b949e;text-decoration:none;font-size:13px;margin-bottom:16px;padding:6px 12px;background:#21262d;border-radius:20px;border:1px solid #30363d;transition:all 0.2s" onmouseover="this.style.color='#e6edf3';this.style.borderColor='#58a6ff'" onmouseout="this.style.color='#8b949e';this.style.borderColor='#30363d'">← Terug naar overzicht</a>
   <div class="header">
     <h1>🚤 Bootdag Syracuse</h1>
-    <div class="subtitle">7 juli · vertrek Porto Grande · Plemmirio kust</div>
+    <div class="subtitle">7 juli · hele dag · Porto Grande → Plemmirio → Ognina</div>
     <div class="stats">
-      <div class="stat"><div class="label">Vaartijd</div><div class="value">~2,5u</div></div>
+      <div class="stat"><div class="label">Aan boord</div><div class="value">Hele dag</div></div>
       <div class="stat"><div class="label">Afstand</div><div class="value">~35 km</div></div>
       <div class="stat"><div class="label">Stops</div><div class="value">8</div></div>
     </div>
   </div>
+
+  <div class="boat-gallery">
+    <a href="img/boot-dek.png" target="_blank" rel="noopener"><img src="img/boot-dek.png" alt="Onze huurboot — voordek met zicht op Ortygia" loading="lazy"></a>
+    <a href="img/boot-console.png" target="_blank" rel="noopener"><img src="img/boot-console.png" alt="Stuurconsole met bimini top" loading="lazy"></a>
+    <a href="img/boot-water.png" target="_blank" rel="noopener"><img src="img/boot-water.png" alt="Voor anker in turquoise water" loading="lazy"></a>
+  </div>
+  <div class="boat-cap">🚤 Onze huurboot — ~40 pk met bimini top tegen de zon. Tik voor groot.</div>
 
   <h2>Route</h2>
 
